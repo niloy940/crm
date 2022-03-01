@@ -18,6 +18,7 @@ roles/permissions, clients, notifications ,warehouses, logs, bill of materials
 
 
 -MANAGER
+
 ●	give tasks for regular users something like notifications or even messaging
 
 ●	crud for clients, warehouses (there is 2 types of warehouses - storage and processing)

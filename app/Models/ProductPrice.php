@@ -3,20 +3,18 @@
 namespace App\Models;
 
 use \DateTimeInterface;
-use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BillMaterial extends Model
+class ProductPrice extends Model
 {
     use SoftDeletes;
     use MultiTenantModelTrait;
-    use Auditable;
     use HasFactory;
 
-    public $table = 'bill_materials';
+    public $table = 'product_prices';
 
     protected $dates = [
         'created_at',
@@ -25,26 +23,17 @@ class BillMaterial extends Model
     ];
 
     protected $fillable = [
-        'name',
-        'for_product_id',
-        'price',
-        'quantity',
-        'coefficient',
-        'total',
         'created_at',
+        'bom_id',
+        'quantity',
         'updated_at',
         'deleted_at',
         'team_id',
     ];
 
-    public function for_product()
+    public function bom()
     {
-        return $this->belongsTo(ProductsList::class, 'for_product_id');
-    }
-
-    public function ingridients()
-    {
-        return $this->belongsToMany(ProductsList::class);
+        return $this->belongsTo(BillMaterial::class, 'bom_id');
     }
 
     public function team()

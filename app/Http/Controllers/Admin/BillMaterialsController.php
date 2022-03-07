@@ -41,10 +41,16 @@ class BillMaterialsController extends Controller
             ));
             });
 
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
             $table->addColumn('for_product_name', function ($row) {
                 return $row->for_product ? $row->for_product->name : '';
             });
 
+            $table->editColumn('for_product.price', function ($row) {
+                return $row->for_product ? (is_string($row->for_product) ? $row->for_product : $row->for_product->price) : '';
+            });
             $table->editColumn('ingridients', function ($row) {
                 $labels = [];
                 foreach ($row->ingridients as $ingridient) {
@@ -53,8 +59,17 @@ class BillMaterialsController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('price', function ($row) {
+                return $row->price ? $row->price : '';
+            });
             $table->editColumn('quantity', function ($row) {
                 return $row->quantity ? $row->quantity : '';
+            });
+            $table->editColumn('coefficient', function ($row) {
+                return $row->coefficient ? $row->coefficient : '';
+            });
+            $table->editColumn('total', function ($row) {
+                return $row->total ? $row->total : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'for_product', 'ingridients']);

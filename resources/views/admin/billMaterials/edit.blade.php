@@ -11,6 +11,16 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <label class="required" for="name">{{ trans('cruds.billMaterial.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $billMaterial->name) }}" required>
+                @if($errors->has('name'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('name') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.billMaterial.fields.name_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="for_product_id">{{ trans('cruds.billMaterial.fields.for_product') }}</label>
                 <select class="form-control select2 {{ $errors->has('for_product') ? 'is-invalid' : '' }}" name="for_product_id" id="for_product_id" required>
                     @foreach($for_products as $id => $entry)
@@ -43,6 +53,16 @@
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.ingridients_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="price">{{ trans('cruds.billMaterial.fields.price') }}</label>
+                <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', $billMaterial->price) }}" step="0.001" required>
+                @if($errors->has('price'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('price') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.billMaterial.fields.price_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="quantity">{{ trans('cruds.billMaterial.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', $billMaterial->quantity) }}" step="0.001" required>
                 @if($errors->has('quantity'))
@@ -51,6 +71,16 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.quantity_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="coefficient">{{ trans('cruds.billMaterial.fields.coefficient') }}</label>
+                <input class="form-control {{ $errors->has('coefficient') ? 'is-invalid' : '' }}" type="number" name="coefficient" id="coefficient" value="{{ old('coefficient', $billMaterial->coefficient) }}" step="0.001" required>
+                @if($errors->has('coefficient'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('coefficient') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.billMaterial.fields.coefficient_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

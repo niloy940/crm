@@ -233,6 +233,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('product-balance-processings/destroy', 'ProductBalanceProcessingController@massDestroy')->name('product-balance-processings.massDestroy');
     Route::resource('product-balance-processings', 'ProductBalanceProcessingController');
 
+    // Product Price
+    Route::delete('product-prices/destroy', 'ProductPriceController@massDestroy')->name('product-prices.massDestroy');
+    Route::resource('product-prices', 'ProductPriceController');
+
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');

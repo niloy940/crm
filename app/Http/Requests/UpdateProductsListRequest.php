@@ -29,6 +29,7 @@ class UpdateProductsListRequest extends FormRequest
             ],
             'price' => [
                 'numeric',
+                'required',
             ],
             'measure' => [
                 'required',

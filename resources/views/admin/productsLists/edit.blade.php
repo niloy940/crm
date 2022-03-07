@@ -35,8 +35,8 @@
                 <span class="help-block">{{ trans('cruds.productsList.fields.warehouse_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="price">{{ trans('cruds.productsList.fields.price') }}</label>
-                <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', $productsList->price) }}" step="0.01">
+                <label class="required" for="price">{{ trans('cruds.productsList.fields.price') }}</label>
+                <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', $productsList->price) }}" step="0.01" required>
                 @if($errors->has('price'))
                     <div class="invalid-feedback">
                         {{ $errors->first('price') }}

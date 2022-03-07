@@ -17,6 +17,11 @@ class UpdateBillMaterialRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => [
+                'string',
+                'required',
+                'unique:bill_materials,name,' . request()->route('bill_material')->id,
+            ],
             'for_product_id' => [
                 'required',
                 'integer',
@@ -28,7 +33,15 @@ class UpdateBillMaterialRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'price' => [
+                'numeric',
+                'required',
+            ],
             'quantity' => [
+                'numeric',
+                'required',
+            ],
+            'coefficient' => [
                 'numeric',
                 'required',
             ],

@@ -17,6 +17,11 @@ class StoreBillMaterialRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => [
+                'string',
+                'required',
+                'unique:bill_materials',
+            ],
             'for_product_id' => [
                 'required',
                 'integer',
@@ -28,7 +33,15 @@ class StoreBillMaterialRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'price' => [
+                'numeric',
+                'required',
+            ],
             'quantity' => [
+                'numeric',
+                'required',
+            ],
+            'coefficient' => [
                 'numeric',
                 'required',
             ],

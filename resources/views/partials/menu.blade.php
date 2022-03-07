@@ -363,7 +363,7 @@
             </li>
         @endcan
         @can('task_management_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/tasks*") ? "c-show" : "" }} {{ request()->is("admin/production-orders*") ? "c-show" : "" }} {{ request()->is("admin/tasks-calendars*") ? "c-show" : "" }} {{ request()->is("admin/user-alerts*") ? "c-show" : "" }} {{ request()->is("admin/task-tags*") ? "c-show" : "" }} {{ request()->is("admin/task-statuses*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/tasks*") ? "c-show" : "" }} {{ request()->is("admin/product-prices*") ? "c-show" : "" }} {{ request()->is("admin/production-orders*") ? "c-show" : "" }} {{ request()->is("admin/tasks-calendars*") ? "c-show" : "" }} {{ request()->is("admin/user-alerts*") ? "c-show" : "" }} {{ request()->is("admin/task-tags*") ? "c-show" : "" }} {{ request()->is("admin/task-statuses*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-tasks c-sidebar-nav-icon">
 
@@ -378,6 +378,16 @@
 
                                 </i>
                                 {{ trans('cruds.task.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('product_price_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.product-prices.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/product-prices") || request()->is("admin/product-prices/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.productPrice.title') }}
                             </a>
                         </li>
                     @endcan

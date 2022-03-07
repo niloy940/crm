@@ -884,6 +884,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 219,
+                'title' => 'product_price_create',
+            ],
+            [
+                'id'    => 220,
+                'title' => 'product_price_edit',
+            ],
+            [
+                'id'    => 221,
+                'title' => 'product_price_show',
+            ],
+            [
+                'id'    => 222,
+                'title' => 'product_price_delete',
+            ],
+            [
+                'id'    => 223,
+                'title' => 'product_price_access',
+            ],
+            [
+                'id'    => 224,
                 'title' => 'profile_password_edit',
             ],
         ];

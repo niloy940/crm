@@ -10,7 +10,11 @@ class CreateBillMaterialsTable extends Migration
     {
         Schema::create('bill_materials', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->unique();
+            $table->float('price', 8, 3);
             $table->float('quantity', 8, 3);
+            $table->float('coefficient', 5, 3);
+            $table->float('total', 7, 3)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

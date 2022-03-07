@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.billMaterial.fields.name') }}
+                        </th>
+                        <td>
+                            {{ $billMaterial->name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.billMaterial.fields.for_product') }}
                         </th>
                         <td>
@@ -43,10 +51,34 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.billMaterial.fields.price') }}
+                        </th>
+                        <td>
+                            {{ $billMaterial->price }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.billMaterial.fields.quantity') }}
                         </th>
                         <td>
                             {{ $billMaterial->quantity }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.billMaterial.fields.coefficient') }}
+                        </th>
+                        <td>
+                            {{ $billMaterial->coefficient }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.billMaterial.fields.total') }}
+                        </th>
+                        <td>
+                            {{ $billMaterial->total }}
                         </td>
                     </tr>
                 </tbody>

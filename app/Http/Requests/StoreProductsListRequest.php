@@ -29,6 +29,7 @@ class StoreProductsListRequest extends FormRequest
             ],
             'price' => [
                 'numeric',
+                'required',
             ],
             'measure' => [
                 'required',

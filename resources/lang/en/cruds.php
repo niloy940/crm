@@ -1034,7 +1034,7 @@ return [
             'id_helper'               => ' ',
             'quantity'                => 'Quantity',
             'quantity_helper'         => ' ',
-            'balance_min'             => 'Mininal balance',
+            'balance_min'             => 'Minimal balance',
             'balance_min_helper'      => ' ',
             'balance_optimal'         => 'Optimal balance',
             'balance_optimal_helper'  => ' ',

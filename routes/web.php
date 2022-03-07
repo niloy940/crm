@@ -217,6 +217,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('lot-tracks/destroy', 'LotTrackController@massDestroy')->name('lot-tracks.massDestroy');
     Route::resource('lot-tracks', 'LotTrackController');
 
+    // Production Order
+    Route::delete('production-orders/destroy', 'ProductionOrderController@massDestroy')->name('production-orders.massDestroy');
+    Route::resource('production-orders', 'ProductionOrderController');
+
+    // Create Finished Product
+    Route::delete('create-finished-products/destroy', 'CreateFinishedProductController@massDestroy')->name('create-finished-products.massDestroy');
+    Route::resource('create-finished-products', 'CreateFinishedProductController');
+
+    // Production Spent
+    Route::delete('production-spents/destroy', 'ProductionSpentController@massDestroy')->name('production-spents.massDestroy');
+    Route::resource('production-spents', 'ProductionSpentController');
+
+    // Product Balance Processing
+    Route::delete('product-balance-processings/destroy', 'ProductBalanceProcessingController@massDestroy')->name('product-balance-processings.massDestroy');
+    Route::resource('product-balance-processings', 'ProductBalanceProcessingController');
+
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');

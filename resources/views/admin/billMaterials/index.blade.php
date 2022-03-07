@@ -28,6 +28,9 @@
                         {{ trans('cruds.billMaterial.fields.ingridients') }}
                     </th>
                     <th>
+                        {{ trans('cruds.billMaterial.fields.quantity') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -85,6 +88,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'for_product_name', name: 'for_product.name' },
 { data: 'ingridients', name: 'ingridients.name' },
+{ data: 'quantity', name: 'quantity' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -28,6 +28,10 @@ class UpdateBillMaterialRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'quantity' => [
+                'numeric',
+                'required',
+            ],
         ];
     }
 }

@@ -54,7 +54,7 @@
                             {{ trans('cruds.oldestItem.fields.int_lot') }}
                         </th>
                         <td>
-                            {{ $oldestItem->int_lot->lot ?? '' }}
+                            {{ $oldestItem->int_lot->int_lot ?? '' }}
                         </td>
                     </tr>
                 </tbody>

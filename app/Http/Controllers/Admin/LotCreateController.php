@@ -47,9 +47,6 @@ class LotCreateController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->editColumn('int_lot', function ($row) {
-                return $row->int_lot ? $row->int_lot : '';
-            });
 
             $table->rawColumns(['actions', 'placeholder']);
 

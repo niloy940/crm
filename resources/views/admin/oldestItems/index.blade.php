@@ -79,7 +79,7 @@
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($receipt_notes as $key => $item)
-                                <option value="{{ $item->lot }}">{{ $item->lot }}</option>
+                                <option value="{{ $item->int_lot }}">{{ $item->int_lot }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -143,11 +143,11 @@
 { data: 'expiry_date', name: 'expiry_dates.expiry_date' },
 { data: 'quantity_quantity', name: 'quantity.quantity' },
 { data: 'quantity.lot', name: 'quantity.lot' },
-{ data: 'int_lot_lot', name: 'int_lot.lot' },
+{ data: 'int_lot_int_lot', name: 'int_lot.int_lot' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 3, 'desc' ]],
+    order: [[ 3, 'asc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-OldestItem').DataTable(dtOverrideGlobals);

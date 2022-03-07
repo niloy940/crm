@@ -4,13 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductBalancesTable extends Migration
+class CreateCreateFinishedProductsTable extends Migration
 {
     public function up()
     {
-        Schema::create('product_balances', function (Blueprint $table) {
+        Schema::create('create_finished_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('quantity', 9, 3)->nullable();
+            $table->string('shift');
+            $table->float('quantity', 8, 2);
+            $table->date('expiry_date');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -53,6 +53,9 @@ class BillMaterialsController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('quantity', function ($row) {
+                return $row->quantity ? $row->quantity : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'for_product', 'ingridients']);
 

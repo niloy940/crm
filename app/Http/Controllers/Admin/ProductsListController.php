@@ -57,6 +57,9 @@ class ProductsListController extends Controller
             $table->editColumn('price', function ($row) {
                 return $row->price ? $row->price : '';
             });
+            $table->editColumn('balance_max', function ($row) {
+                return $row->balance_max ? $row->balance_max : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'warehouse']);
 

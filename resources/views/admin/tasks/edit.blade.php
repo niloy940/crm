@@ -74,6 +74,16 @@
                 <span class="help-block">{{ trans('cruds.task.fields.attachment_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="start_date">{{ trans('cruds.task.fields.start_date') }}</label>
+                <input class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}" type="text" name="start_date" id="start_date" value="{{ old('start_date', $task->start_date) }}" required>
+                @if($errors->has('start_date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('start_date') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.task.fields.start_date_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="due_date">{{ trans('cruds.task.fields.due_date') }}</label>
                 <input class="form-control date {{ $errors->has('due_date') ? 'is-invalid' : '' }}" type="text" name="due_date" id="due_date" value="{{ old('due_date', $task->due_date) }}">
                 @if($errors->has('due_date'))

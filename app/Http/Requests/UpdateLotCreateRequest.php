@@ -18,11 +18,8 @@ class UpdateLotCreateRequest extends FormRequest
     {
         return [
             'int_lot' => [
-                'string',
-                'min:8',
-                'max:32',
                 'required',
-                'unique:lot_creates,int_lot,' . request()->route('lot_create')->id,
+                'date_format:' . config('panel.date_format'),
             ],
         ];
     }

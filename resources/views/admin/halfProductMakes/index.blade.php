@@ -29,10 +29,10 @@
                             {{ trans('cruds.halfProductMake.fields.ingridients') }}
                         </th>
                         <th>
-                            {{ trans('cruds.halfProductMake.fields.int_lot') }}
+                            {{ trans('cruds.halfProductMake.fields.quantity') }}
                         </th>
                         <th>
-                            {{ trans('cruds.halfProductMake.fields.quantity') }}
+                            {{ trans('cruds.halfProductMake.fields.int_lot') }}
                         </th>
                         <th>
                             {{ trans('cruds.halfProductMake.fields.made_by') }}
@@ -64,15 +64,15 @@
                             </select>
                         </td>
                         <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
                             <select class="search">
                                 <option value>{{ trans('global.all') }}</option>
                                 @foreach($receipt_notes as $key => $item)
                                     <option value="{{ $item->int_lot }}">{{ $item->int_lot }}</option>
                                 @endforeach
                             </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
                             <select class="search">
@@ -104,12 +104,12 @@
                                 @endforeach
                             </td>
                             <td>
+                                {{ $halfProductMake->quantity ?? '' }}
+                            </td>
+                            <td>
                                 @foreach($halfProductMake->int_lots as $key => $item)
                                     <span class="badge badge-info">{{ $item->int_lot }}</span>
                                 @endforeach
-                            </td>
-                            <td>
-                                {{ $halfProductMake->quantity ?? '' }}
                             </td>
                             <td>
                                 {{ $halfProductMake->made_by->name ?? '' }}

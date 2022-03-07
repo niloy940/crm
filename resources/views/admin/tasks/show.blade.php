@@ -71,6 +71,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.task.fields.start_date') }}
+                        </th>
+                        <td>
+                            {{ $task->start_date }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.task.fields.due_date') }}
                         </th>
                         <td>

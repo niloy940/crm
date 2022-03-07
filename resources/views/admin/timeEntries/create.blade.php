@@ -10,20 +10,6 @@
         <form method="POST" action="{{ route("admin.time-entries.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="work_type_id">{{ trans('cruds.timeEntry.fields.work_type') }}</label>
-                <select class="form-control select2 {{ $errors->has('work_type') ? 'is-invalid' : '' }}" name="work_type_id" id="work_type_id">
-                    @foreach($work_types as $id => $entry)
-                        <option value="{{ $id }}" {{ old('work_type_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('work_type'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('work_type') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.timeEntry.fields.work_type_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="project_id">{{ trans('cruds.timeEntry.fields.project') }}</label>
                 <select class="form-control select2 {{ $errors->has('project') ? 'is-invalid' : '' }}" name="project_id" id="project_id">
                     @foreach($projects as $id => $entry)
@@ -36,6 +22,38 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.timeEntry.fields.project_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="client_id">{{ trans('cruds.timeEntry.fields.client') }}</label>
+                <select class="form-control select2 {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id">
+                    @foreach($clients as $id => $entry)
+                        <option value="{{ $id }}" {{ old('client_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('client'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('client') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.timeEntry.fields.client_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="products">{{ trans('cruds.timeEntry.fields.products') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('products') ? 'is-invalid' : '' }}" name="products[]" id="products" multiple>
+                    @foreach($products as $id => $product)
+                        <option value="{{ $id }}" {{ in_array($id, old('products', [])) ? 'selected' : '' }}>{{ $product }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('products'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('products') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.timeEntry.fields.products_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="start_time">{{ trans('cruds.timeEntry.fields.start_time') }}</label>

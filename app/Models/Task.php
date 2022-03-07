@@ -4,6 +4,7 @@ namespace App\Models;
 
 use \DateTimeInterface;
 use App\Traits\Auditable;
+use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Task extends Model implements HasMedia
 {
     use SoftDeletes;
+    use MultiTenantModelTrait;
     use InteractsWithMedia;
     use Auditable;
     use HasFactory;
@@ -26,6 +28,7 @@ class Task extends Model implements HasMedia
     ];
 
     protected $dates = [
+        'start_date',
         'due_date',
         'created_at',
         'updated_at',
@@ -36,11 +39,13 @@ class Task extends Model implements HasMedia
         'name',
         'description',
         'status_id',
+        'start_date',
         'due_date',
         'assigned_to_id',
         'created_at',
         'updated_at',
         'deleted_at',
+        'team_id',
     ];
 
     public function registerMediaConversions(Media $media = null): void
@@ -64,6 +69,16 @@ class Task extends Model implements HasMedia
         return $this->getMedia('attachment')->last();
     }
 
+    public function getStartDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setStartDateAttribute($value)
+    {
+        $this->attributes['start_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
     public function getDueDateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
@@ -77,6 +92,11 @@ class Task extends Model implements HasMedia
     public function assigned_to()
     {
         return $this->belongsTo(User::class, 'assigned_to_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

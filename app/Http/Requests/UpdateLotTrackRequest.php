@@ -16,13 +16,6 @@ class UpdateLotTrackRequest extends FormRequest
 
     public function rules()
     {
-        return [
-            'int_lots.*' => [
-                'integer',
-            ],
-            'int_lots' => [
-                'array',
-            ],
-        ];
+        return [];
     }
 }

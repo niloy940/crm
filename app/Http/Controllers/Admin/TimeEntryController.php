@@ -7,9 +7,11 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyTimeEntryRequest;
 use App\Http\Requests\StoreTimeEntryRequest;
 use App\Http\Requests\UpdateTimeEntryRequest;
+use App\Models\CrmCustomer;
+use App\Models\ProductsList;
+use App\Models\Team;
 use App\Models\TimeEntry;
 use App\Models\TimeProject;
-use App\Models\TimeWorkType;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +26,7 @@ class TimeEntryController extends Controller
         abort_if(Gate::denies('time_entry_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = TimeEntry::with(['work_type', 'project', 'team'])->select(sprintf('%s.*', (new TimeEntry())->table));
+            $query = TimeEntry::with(['project', 'client', 'products', 'team'])->select(sprintf('%s.*', (new TimeEntry())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,36 +50,53 @@ class TimeEntryController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->addColumn('work_type_name', function ($row) {
-                return $row->work_type ? $row->work_type->name : '';
-            });
-
             $table->addColumn('project_name', function ($row) {
                 return $row->project ? $row->project->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'work_type', 'project']);
+            $table->addColumn('client_company_name', function ($row) {
+                return $row->client ? $row->client->company_name : '';
+            });
+
+            $table->editColumn('products', function ($row) {
+                $labels = [];
+                foreach ($row->products as $product) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $product->name);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'project', 'client', 'products']);
 
             return $table->make(true);
         }
 
-        return view('admin.timeEntries.index');
+        $time_projects  = TimeProject::get();
+        $crm_customers  = CrmCustomer::get();
+        $products_lists = ProductsList::get();
+        $teams          = Team::get();
+
+        return view('admin.timeEntries.index', compact('time_projects', 'crm_customers', 'products_lists', 'teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('time_entry_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $work_types = TimeWorkType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $projects = TimeProject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.timeEntries.create', compact('projects', 'work_types'));
+        $clients = CrmCustomer::pluck('company_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $products = ProductsList::pluck('name', 'id');
+
+        return view('admin.timeEntries.create', compact('clients', 'products', 'projects'));
     }
 
     public function store(StoreTimeEntryRequest $request)
     {
         $timeEntry = TimeEntry::create($request->all());
+        $timeEntry->products()->sync($request->input('products', []));
 
         return redirect()->route('admin.time-entries.index');
     }
@@ -86,18 +105,21 @@ class TimeEntryController extends Controller
     {
         abort_if(Gate::denies('time_entry_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $work_types = TimeWorkType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $projects = TimeProject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $timeEntry->load('work_type', 'project', 'team');
+        $clients = CrmCustomer::pluck('company_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.timeEntries.edit', compact('projects', 'timeEntry', 'work_types'));
+        $products = ProductsList::pluck('name', 'id');
+
+        $timeEntry->load('project', 'client', 'products', 'team');
+
+        return view('admin.timeEntries.edit', compact('clients', 'products', 'projects', 'timeEntry'));
     }
 
     public function update(UpdateTimeEntryRequest $request, TimeEntry $timeEntry)
     {
         $timeEntry->update($request->all());
+        $timeEntry->products()->sync($request->input('products', []));
 
         return redirect()->route('admin.time-entries.index');
     }
@@ -106,7 +128,7 @@ class TimeEntryController extends Controller
     {
         abort_if(Gate::denies('time_entry_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $timeEntry->load('work_type', 'project', 'team');
+        $timeEntry->load('project', 'client', 'products', 'team');
 
         return view('admin.timeEntries.show', compact('timeEntry'));
     }

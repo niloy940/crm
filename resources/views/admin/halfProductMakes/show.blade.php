@@ -35,20 +35,20 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.halfProductMake.fields.quantity') }}
+                        </th>
+                        <td>
+                            {{ $halfProductMake->quantity }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.halfProductMake.fields.int_lot') }}
                         </th>
                         <td>
                             @foreach($halfProductMake->int_lots as $key => $int_lot)
                                 <span class="label label-info">{{ $int_lot->int_lot }}</span>
                             @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.halfProductMake.fields.quantity') }}
-                        </th>
-                        <td>
-                            {{ $halfProductMake->quantity }}
                         </td>
                     </tr>
                     <tr>

@@ -25,18 +25,28 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.timeEntry.fields.work_type') }}
-                        </th>
-                        <td>
-                            {{ $timeEntry->work_type->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.timeEntry.fields.project') }}
                         </th>
                         <td>
                             {{ $timeEntry->project->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.timeEntry.fields.client') }}
+                        </th>
+                        <td>
+                            {{ $timeEntry->client->company_name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.timeEntry.fields.products') }}
+                        </th>
+                        <td>
+                            @foreach($timeEntry->products as $key => $products)
+                                <span class="label label-info">{{ $products->name }}</span>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>

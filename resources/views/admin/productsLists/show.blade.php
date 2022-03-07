@@ -57,6 +57,14 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.productsList.fields.balance_max') }}
+                        </th>
+                        <td>
+                            {{ $productsList->balance_max }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

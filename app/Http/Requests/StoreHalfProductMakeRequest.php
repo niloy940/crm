@@ -28,16 +28,16 @@ class StoreHalfProductMakeRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'quantity' => [
+                'numeric',
+                'required',
+            ],
             'int_lots.*' => [
                 'integer',
             ],
             'int_lots' => [
                 'required',
                 'array',
-            ],
-            'quantity' => [
-                'numeric',
-                'required',
             ],
             'made_by_id' => [
                 'required',

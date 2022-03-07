@@ -5,6 +5,7 @@ namespace App\Models;
 use \DateTimeInterface;
 use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,23 +19,30 @@ class LotCreate extends Model
 
     public $table = 'lot_creates';
 
-    public static $searchable = [
-        'int_lot',
-    ];
-
     protected $dates = [
         'created_at',
+        'int_lot',
         'updated_at',
         'deleted_at',
     ];
 
     protected $fillable = [
-        'int_lot',
         'created_at',
+        'int_lot',
         'updated_at',
         'deleted_at',
         'team_id',
     ];
+
+    public function getIntLotAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setIntLotAttribute($value)
+    {
+        $this->attributes['int_lot'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
 
     public function team()
     {

@@ -15,6 +15,7 @@ class CreateProductsListsTable extends Migration
             $table->string('measure');
             $table->float('balance_optimal', 7, 2);
             $table->float('balance_min', 7, 2);
+            $table->float('balance_max', 8, 2);
             $table->timestamps();
             $table->softDeletes();
         });

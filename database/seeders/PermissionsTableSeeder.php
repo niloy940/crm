@@ -804,6 +804,86 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 199,
+                'title' => 'production_order_create',
+            ],
+            [
+                'id'    => 200,
+                'title' => 'production_order_edit',
+            ],
+            [
+                'id'    => 201,
+                'title' => 'production_order_show',
+            ],
+            [
+                'id'    => 202,
+                'title' => 'production_order_delete',
+            ],
+            [
+                'id'    => 203,
+                'title' => 'production_order_access',
+            ],
+            [
+                'id'    => 204,
+                'title' => 'create_finished_product_create',
+            ],
+            [
+                'id'    => 205,
+                'title' => 'create_finished_product_edit',
+            ],
+            [
+                'id'    => 206,
+                'title' => 'create_finished_product_show',
+            ],
+            [
+                'id'    => 207,
+                'title' => 'create_finished_product_delete',
+            ],
+            [
+                'id'    => 208,
+                'title' => 'create_finished_product_access',
+            ],
+            [
+                'id'    => 209,
+                'title' => 'production_spent_create',
+            ],
+            [
+                'id'    => 210,
+                'title' => 'production_spent_edit',
+            ],
+            [
+                'id'    => 211,
+                'title' => 'production_spent_show',
+            ],
+            [
+                'id'    => 212,
+                'title' => 'production_spent_delete',
+            ],
+            [
+                'id'    => 213,
+                'title' => 'production_spent_access',
+            ],
+            [
+                'id'    => 214,
+                'title' => 'product_balance_processing_create',
+            ],
+            [
+                'id'    => 215,
+                'title' => 'product_balance_processing_edit',
+            ],
+            [
+                'id'    => 216,
+                'title' => 'product_balance_processing_show',
+            ],
+            [
+                'id'    => 217,
+                'title' => 'product_balance_processing_delete',
+            ],
+            [
+                'id'    => 218,
+                'title' => 'product_balance_processing_access',
+            ],
+            [
+                'id'    => 219,
                 'title' => 'profile_password_edit',
             ],
         ];

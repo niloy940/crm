@@ -41,6 +41,10 @@ class UpdateProductsListRequest extends FormRequest
                 'numeric',
                 'required',
             ],
+            'balance_max' => [
+                'numeric',
+                'required',
+            ],
         ];
     }
 }

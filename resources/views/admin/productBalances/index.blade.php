@@ -34,6 +34,12 @@
                         {{ trans('cruds.productBalance.fields.balance_min') }}
                     </th>
                     <th>
+                        {{ trans('cruds.productBalance.fields.balance_max') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.productBalance.fields.balance_reserved') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -93,10 +99,12 @@
 { data: 'quantity', name: 'quantity' },
 { data: 'balance_optimal_balance_optimal', name: 'balance_optimal.balance_optimal' },
 { data: 'balance_min_balance_min', name: 'balance_min.balance_min' },
+{ data: 'balance_max', name: 'balance_max' },
+{ data: 'balance_reserved', name: 'balance_reserved' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 4, 'asc' ]],
     pageLength: 25,
   };
   let table = $('.datatable-ProductBalance').DataTable(dtOverrideGlobals);

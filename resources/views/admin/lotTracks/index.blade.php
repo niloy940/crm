@@ -25,9 +25,6 @@
                         {{ trans('cruds.lotTrack.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.lotTrack.fields.int_lot') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.lotTrack.fields.created_at') }}
                     </th>
                     <th>
@@ -39,14 +36,6 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($lot_creates as $key => $item)
-                                <option value="{{ $item->int_lot }}">{{ $item->int_lot }}</option>
-                            @endforeach
-                        </select>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -107,12 +96,11 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'int_lot', name: 'int_lots.int_lot' },
 { data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 3, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 25,
   };
   let table = $('.datatable-LotTrack').DataTable(dtOverrideGlobals);

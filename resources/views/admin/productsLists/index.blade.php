@@ -38,6 +38,9 @@
                         {{ trans('cruds.productsList.fields.price') }}
                     </th>
                     <th>
+                        {{ trans('cruds.productsList.fields.balance_max') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -97,6 +100,7 @@
 { data: 'name', name: 'name' },
 { data: 'warehouse_name', name: 'warehouse.name' },
 { data: 'price', name: 'price' },
+{ data: 'balance_max', name: 'balance_max' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

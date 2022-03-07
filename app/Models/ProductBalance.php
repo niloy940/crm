@@ -29,6 +29,8 @@ class ProductBalance extends Model
         'team_id',
         'balance_optimal_id',
         'balance_min_id',
+        'balance_max',
+        'balance_reserved',
         'created_at',
         'updated_at',
         'deleted_at',

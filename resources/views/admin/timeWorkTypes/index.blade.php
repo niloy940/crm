@@ -29,9 +29,6 @@
                         {{ trans('cruds.timeWorkType.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.timeWorkType.fields.name') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -88,7 +85,6 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

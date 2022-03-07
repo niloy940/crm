@@ -1,51 +1,62 @@
-CRM Requirements (basic idea and usage)
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-roles/permissions, clients, notifications ,warehouses, logs, bill of materials
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-1.	Roles/Permissions and user use-case
+## About Laravel
 
--ADMIN
-      
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-●	admin should be only one able to register new users
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-●	has access to all functionalities (even ones that i will describe i dont wanna DRY)
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-●	configures permissions/roles for all other roles
+## Learning Laravel
 
-●	every change on the users table should be logged by whom it’s made and when (not exact thing that is done)
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
+## Laravel Sponsors
 
--MANAGER
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-●	give tasks for regular users something like notifications or even messaging
+### Premium Partners
 
-●	crud for clients, warehouses (there is 2 types of warehouses - storage and processing)
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/)**
+- **[OP.GG](https://op.gg)**
 
-●	assign or unassign warehouse for the user
+## Contributing
 
-●	read all the data and print it out
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-●	log every change to the cruds
+## Code of Conduct
 
-●   create bill of materials for each needed product, manage quantities needed, and create work orders with quantities of finished product that should be calculated by application and submitted to the other choosen users
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
+## Security Vulnerabilities
 
--USER
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-●	reads tasks or messages assigned to him
+## License
 
-●	has access to 1 or multiple warehouses
-
-●	transfer quantities between warehouses and upon sending other user that’s in charge of that specific warehouse should confirm it , and only then balance of warehouses is updated. Upon confirming that creates a document that is then saved and printable, with the data about lot codes, quantities, and users. Upon transfering from the warehouse 1 to warehouse 2 new lot code should be generated like the extension of the previous.
-
-●	In case of processing warehouse type, user should have crud for entering spent amounts and then updating finished products with added balance and new LOT code that is in some time in advance (date field, that is gonna mark for example 9 months from now, but he should be able to have input for it, and it should be saved in a format like ‘16022022’);
-
-●	In case of warehouse type storage, user should be able to receive items and give out items (receipt notes and delivery notes) for which he enters data (client, items, warehouse, LOT, document, datetime)
-
-●   See work orders and update info about them
-
-Explanations about LOT codes:
-
-This should be a pivot table that tracks down items from finished products all the way back to the every ingridient used. At the end of a working shift, when user that is working in processing warehouse enters finished product, all the data for it should be saved. Admin should be able to search through this table by choosing type of search (ingridients or finished product) and entering lot code, that will then display all related data
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

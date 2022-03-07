@@ -41,6 +41,14 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.billMaterial.fields.quantity') }}
+                        </th>
+                        <td>
+                            {{ $billMaterial->quantity }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

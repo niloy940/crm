@@ -28,8 +28,8 @@ class TimeEntry extends Model
     ];
 
     protected $fillable = [
-        'work_type_id',
         'project_id',
+        'client_id',
         'start_time',
         'end_time',
         'created_at',
@@ -38,14 +38,19 @@ class TimeEntry extends Model
         'team_id',
     ];
 
-    public function work_type()
-    {
-        return $this->belongsTo(TimeWorkType::class, 'work_type_id');
-    }
-
     public function project()
     {
         return $this->belongsTo(TimeProject::class, 'project_id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(CrmCustomer::class, 'client_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(ProductsList::class);
     }
 
     public function getStartTimeAttribute($value)

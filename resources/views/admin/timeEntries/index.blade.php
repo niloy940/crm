@@ -29,10 +29,13 @@
                         {{ trans('cruds.timeEntry.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.timeEntry.fields.work_type') }}
+                        {{ trans('cruds.timeEntry.fields.project') }}
                     </th>
                     <th>
-                        {{ trans('cruds.timeEntry.fields.project') }}
+                        {{ trans('cruds.timeEntry.fields.client') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.timeEntry.fields.products') }}
                     </th>
                     <th>
                         {{ trans('cruds.timeEntry.fields.start_time') }}
@@ -41,8 +44,53 @@
                         {{ trans('cruds.timeEntry.fields.end_time') }}
                     </th>
                     <th>
+                        {{ trans('cruds.timeEntry.fields.created_at') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($time_projects as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($crm_customers as $key => $item)
+                                <option value="{{ $item->company_name }}">{{ $item->company_name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($products_lists as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
                 </tr>
             </thead>
         </table>
@@ -97,15 +145,17 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'work_type_name', name: 'work_type.name' },
 { data: 'project_name', name: 'project.name' },
+{ data: 'client_company_name', name: 'client.company_name' },
+{ data: 'products', name: 'products.name' },
 { data: 'start_time', name: 'start_time' },
 { data: 'end_time', name: 'end_time' },
+{ data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
+    order: [[ 7, 'desc' ]],
+    pageLength: 25,
   };
   let table = $('.datatable-TimeEntry').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
@@ -113,6 +163,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 });
 
 </script>

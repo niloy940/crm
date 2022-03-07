@@ -63,7 +63,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="int_lot">{{ trans('cruds.receiptNote.fields.int_lot') }}</label>
-                <input class="form-control {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" type="text" name="int_lot" id="int_lot" value="{{ old('int_lot', 'SI_') }}" required>
+                <input class="form-control {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" type="text" name="int_lot" id="int_lot" value="{{ old('int_lot', '') }}" required>
                 @if($errors->has('int_lot'))
                     <div class="invalid-feedback">
                         {{ $errors->first('int_lot') }}

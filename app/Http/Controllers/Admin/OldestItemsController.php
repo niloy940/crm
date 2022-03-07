@@ -65,8 +65,8 @@ class OldestItemsController extends Controller
             $table->editColumn('quantity.lot', function ($row) {
                 return $row->quantity ? (is_string($row->quantity) ? $row->quantity : $row->quantity->lot) : '';
             });
-            $table->addColumn('int_lot_lot', function ($row) {
-                return $row->int_lot ? $row->int_lot->lot : '';
+            $table->addColumn('int_lot_int_lot', function ($row) {
+                return $row->int_lot ? $row->int_lot->int_lot : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'product', 'expiry_date', 'quantity', 'int_lot']);

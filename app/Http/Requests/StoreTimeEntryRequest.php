@@ -17,6 +17,12 @@ class StoreTimeEntryRequest extends FormRequest
     public function rules()
     {
         return [
+            'products.*' => [
+                'integer',
+            ],
+            'products' => [
+                'array',
+            ],
             'start_time' => [
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),

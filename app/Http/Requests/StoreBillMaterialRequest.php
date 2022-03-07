@@ -28,6 +28,10 @@ class StoreBillMaterialRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'quantity' => [
+                'numeric',
+                'required',
+            ],
         ];
     }
 }

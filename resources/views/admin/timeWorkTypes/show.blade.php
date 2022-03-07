@@ -23,14 +23,6 @@
                             {{ $timeWorkType->id }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.timeWorkType.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $timeWorkType->name }}
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

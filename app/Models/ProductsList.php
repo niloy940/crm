@@ -44,6 +44,7 @@ class ProductsList extends Model
         'measure',
         'balance_optimal',
         'balance_min',
+        'balance_max',
         'updated_at',
         'deleted_at',
         'team_id',

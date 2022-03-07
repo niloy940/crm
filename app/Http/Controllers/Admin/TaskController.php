@@ -10,29 +10,84 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\TaskTag;
+use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class TaskController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tasks = Task::with(['status', 'tags', 'assigned_to', 'media'])->get();
+        if ($request->ajax()) {
+            $query = Task::with(['status', 'tags', 'assigned_to', 'team'])->select(sprintf('%s.*', (new Task())->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'task_show';
+                $editGate = 'task_edit';
+                $deleteGate = 'task_delete';
+                $crudRoutePart = 'tasks';
+
+                return view('partials.datatablesActions', compact(
+                'viewGate',
+                'editGate',
+                'deleteGate',
+                'crudRoutePart',
+                'row'
+            ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+            $table->editColumn('description', function ($row) {
+                return $row->description ? $row->description : '';
+            });
+            $table->addColumn('status_name', function ($row) {
+                return $row->status ? $row->status->name : '';
+            });
+
+            $table->editColumn('tag', function ($row) {
+                $labels = [];
+                foreach ($row->tags as $tag) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $tag->name);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->editColumn('attachment', function ($row) {
+                return $row->attachment ? '<a href="' . $row->attachment->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
+
+            $table->addColumn('assigned_to_name', function ($row) {
+                return $row->assigned_to ? $row->assigned_to->name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'status', 'tag', 'attachment', 'assigned_to']);
+
+            return $table->make(true);
+        }
 
         $task_statuses = TaskStatus::get();
+        $task_tags     = TaskTag::get();
+        $users         = User::get();
+        $teams         = Team::get();
 
-        $task_tags = TaskTag::get();
-
-        $users = User::get();
-
-        return view('admin.tasks.index', compact('task_statuses', 'task_tags', 'tasks', 'users'));
+        return view('admin.tasks.index', compact('task_statuses', 'task_tags', 'users', 'teams'));
     }
 
     public function create()
@@ -73,7 +128,7 @@ class TaskController extends Controller
 
         $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $task->load('status', 'tags', 'assigned_to');
+        $task->load('status', 'tags', 'assigned_to', 'team');
 
         return view('admin.tasks.edit', compact('assigned_tos', 'statuses', 'tags', 'task'));
     }
@@ -100,7 +155,7 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $task->load('status', 'tags', 'assigned_to');
+        $task->load('status', 'tags', 'assigned_to', 'team');
 
         return view('admin.tasks.show', compact('task'));
     }

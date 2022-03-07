@@ -23,16 +23,6 @@
                             {{ $lotTrack->id }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.lotTrack.fields.int_lot') }}
-                        </th>
-                        <td>
-                            @foreach($lotTrack->int_lots as $key => $int_lot)
-                                <span class="label label-info">{{ $int_lot->int_lot }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

@@ -79,6 +79,16 @@
                 <span class="help-block">{{ trans('cruds.productsList.fields.balance_min_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="balance_max">{{ trans('cruds.productsList.fields.balance_max') }}</label>
+                <input class="form-control {{ $errors->has('balance_max') ? 'is-invalid' : '' }}" type="number" name="balance_max" id="balance_max" value="{{ old('balance_max', '') }}" step="0.01" required>
+                @if($errors->has('balance_max'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('balance_max') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.productsList.fields.balance_max_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

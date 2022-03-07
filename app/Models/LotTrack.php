@@ -31,11 +31,6 @@ class LotTrack extends Model
         'team_id',
     ];
 
-    public function int_lots()
-    {
-        return $this->belongsToMany(LotCreate::class);
-    }
-
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

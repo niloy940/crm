@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyProductBalanceRequest;
 use App\Http\Requests\StoreProductBalanceRequest;
 use App\Http\Requests\UpdateProductBalanceRequest;
 use App\Models\ProductBalance;
+use App\Models\ProductsList;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,6 +60,13 @@ class ProductBalanceController extends Controller
                 return $row->balance_min ? $row->balance_min->balance_min : '';
             });
 
+            $table->editColumn('balance_max', function ($row) {
+                return $row->balance_max ? $row->balance_max : '';
+            });
+            $table->editColumn('balance_reserved', function ($row) {
+                return $row->balance_reserved ? $row->balance_reserved : '';
+            });
+
             $table->rawColumns(['actions', 'placeholder', 'name', 'balance_optimal', 'balance_min']);
 
             return $table->make(true);
@@ -71,7 +79,11 @@ class ProductBalanceController extends Controller
     {
         abort_if(Gate::denies('product_balance_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.productBalances.create');
+        $balance_optimals = ProductsList::pluck('balance_optimal', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $balance_mins = ProductsList::pluck('balance_min', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.productBalances.create', compact('balance_mins', 'balance_optimals'));
     }
 
     public function store(StoreProductBalanceRequest $request)
@@ -85,9 +97,13 @@ class ProductBalanceController extends Controller
     {
         abort_if(Gate::denies('product_balance_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $balance_optimals = ProductsList::pluck('balance_optimal', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $balance_mins = ProductsList::pluck('balance_min', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $productBalance->load('names', 'team', 'balance_optimal', 'balance_min');
 
-        return view('admin.productBalances.edit', compact('productBalance'));
+        return view('admin.productBalances.edit', compact('balance_mins', 'balance_optimals', 'productBalance'));
     }
 
     public function update(UpdateProductBalanceRequest $request, ProductBalance $productBalance)

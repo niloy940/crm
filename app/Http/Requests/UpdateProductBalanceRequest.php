@@ -16,6 +16,10 @@ class UpdateProductBalanceRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'balance_max' => [
+                'numeric',
+            ],
+        ];
     }
 }

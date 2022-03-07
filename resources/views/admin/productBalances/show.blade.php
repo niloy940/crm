@@ -57,6 +57,22 @@
                             {{ $productBalance->balance_min->balance_min ?? '' }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.productBalance.fields.balance_max') }}
+                        </th>
+                        <td>
+                            {{ $productBalance->balance_max }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.productBalance.fields.balance_reserved') }}
+                        </th>
+                        <td>
+                            {{ $productBalance->balance_reserved }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

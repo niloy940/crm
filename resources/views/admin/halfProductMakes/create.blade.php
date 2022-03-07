@@ -42,6 +42,16 @@
                 <span class="help-block">{{ trans('cruds.halfProductMake.fields.ingridients_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="quantity">{{ trans('cruds.halfProductMake.fields.quantity') }}</label>
+                <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.01" required>
+                @if($errors->has('quantity'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('quantity') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.halfProductMake.fields.quantity_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="int_lots">{{ trans('cruds.halfProductMake.fields.int_lot') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -58,16 +68,6 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.halfProductMake.fields.int_lot_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="quantity">{{ trans('cruds.halfProductMake.fields.quantity') }}</label>
-                <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.01" required>
-                @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.halfProductMake.fields.quantity_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="made_by_id">{{ trans('cruds.halfProductMake.fields.made_by') }}</label>

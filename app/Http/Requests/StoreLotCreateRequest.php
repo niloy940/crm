@@ -18,11 +18,8 @@ class StoreLotCreateRequest extends FormRequest
     {
         return [
             'int_lot' => [
-                'string',
-                'min:8',
-                'max:32',
                 'required',
-                'unique:lot_creates',
+                'date_format:' . config('panel.date_format'),
             ],
         ];
     }

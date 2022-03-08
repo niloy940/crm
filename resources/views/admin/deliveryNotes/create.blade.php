@@ -38,6 +38,20 @@
                 <span class="help-block">{{ trans('cruds.deliveryNote.fields.product_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="int_lot_id">{{ trans('cruds.deliveryNote.fields.int_lot') }}</label>
+                <select class="form-control select2 {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" name="int_lot_id" id="int_lot_id" required>
+                    @foreach($int_lots as $id => $entry)
+                        <option value="{{ $id }}" {{ old('int_lot_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('int_lot'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('int_lot') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.deliveryNote.fields.int_lot_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="quantity">{{ trans('cruds.deliveryNote.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
                 @if($errors->has('quantity'))

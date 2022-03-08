@@ -654,6 +654,8 @@ return [
             'deleted_at_helper' => ' ',
             'team'              => 'Team',
             'team_helper'       => ' ',
+            'int_lot'           => 'Internal LOT',
+            'int_lot_helper'    => ' ',
         ],
     ],
     'warehouseTransfer' => [
@@ -682,6 +684,8 @@ return [
             'deleted_at_helper'     => ' ',
             'team'                  => 'Team',
             'team_helper'           => ' ',
+            'int_lot'               => 'Internal LOT',
+            'int_lot_helper'        => ' ',
         ],
     ],
     'packingList' => [

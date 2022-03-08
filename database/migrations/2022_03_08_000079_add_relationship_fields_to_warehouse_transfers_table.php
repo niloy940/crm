@@ -15,6 +15,8 @@ class AddRelationshipFieldsToWarehouseTransfersTable extends Migration
             $table->foreign('warehouse_to_id', 'warehouse_to_fk_6051283')->references('id')->on('warehouses_lists');
             $table->unsignedBigInteger('product_id')->nullable();
             $table->foreign('product_id', 'product_fk_6051284')->references('id')->on('products_lists');
+            $table->unsignedBigInteger('int_lot_id')->nullable();
+            $table->foreign('int_lot_id', 'int_lot_fk_6159804')->references('id')->on('receipt_notes');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id', 'user_fk_6051286')->references('id')->on('users');
             $table->unsignedBigInteger('user_received_id')->nullable();

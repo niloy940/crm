@@ -49,6 +49,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.warehouseTransfer.fields.int_lot') }}
+                        </th>
+                        <td>
+                            {{ $warehouseTransfer->int_lot->int_lot ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.warehouseTransfer.fields.quantity') }}
                         </th>
                         <td>

@@ -34,6 +34,9 @@
                         {{ trans('cruds.warehouseTransfer.fields.product') }}
                     </th>
                     <th>
+                        {{ trans('cruds.warehouseTransfer.fields.int_lot') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.warehouseTransfer.fields.quantity') }}
                     </th>
                     <th>
@@ -73,6 +76,14 @@
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($products_lists as $key => $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($receipt_notes as $key => $item)
+                                <option value="{{ $item->int_lot }}">{{ $item->int_lot }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -154,6 +165,7 @@
 { data: 'warehouse_from_name', name: 'warehouse_from.name' },
 { data: 'warehouse_to_name', name: 'warehouse_to.name' },
 { data: 'product_name', name: 'product.name' },
+{ data: 'int_lot_int_lot', name: 'int_lot.int_lot' },
 { data: 'quantity', name: 'quantity' },
 { data: 'user_name', name: 'user.name' },
 { data: 'user_received_name', name: 'user_received.name' },

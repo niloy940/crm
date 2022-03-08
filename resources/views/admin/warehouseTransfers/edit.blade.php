@@ -39,6 +39,20 @@
                 <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.warehouse_to_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="int_lot_id">{{ trans('cruds.warehouseTransfer.fields.int_lot') }}</label>
+                <select class="form-control select2 {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" name="int_lot_id" id="int_lot_id" required>
+                    @foreach($int_lots as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('int_lot_id') ? old('int_lot_id') : $warehouseTransfer->int_lot->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('int_lot'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('int_lot') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.int_lot_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

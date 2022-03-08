@@ -28,6 +28,7 @@ class WarehouseTransfer extends Model
         'warehouse_from_id',
         'warehouse_to_id',
         'product_id',
+        'int_lot_id',
         'quantity',
         'user_id',
         'user_received_id',
@@ -50,6 +51,11 @@ class WarehouseTransfer extends Model
     public function product()
     {
         return $this->belongsTo(ProductsList::class, 'product_id');
+    }
+
+    public function int_lot()
+    {
+        return $this->belongsTo(ReceiptNote::class, 'int_lot_id');
     }
 
     public function user()

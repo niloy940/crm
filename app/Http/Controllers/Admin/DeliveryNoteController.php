@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateDeliveryNoteRequest;
 use App\Models\CrmCustomer;
 use App\Models\DeliveryNote;
 use App\Models\ProductsList;
+use App\Models\ReceiptNote;
 use App\Models\Team;
 use App\Models\User;
 use Gate;
@@ -29,7 +30,7 @@ class DeliveryNoteController extends Controller
         abort_if(Gate::denies('delivery_note_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = DeliveryNote::with(['client', 'product', 'issuer', 'team'])->select(sprintf('%s.*', (new DeliveryNote())->table));
+            $query = DeliveryNote::with(['client', 'product', 'int_lot', 'issuer', 'team'])->select(sprintf('%s.*', (new DeliveryNote())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -76,6 +77,10 @@ class DeliveryNoteController extends Controller
             $table->editColumn('quantity', function ($row) {
                 return $row->quantity ? $row->quantity : '';
             });
+            $table->addColumn('int_lot_int_lot', function ($row) {
+                return $row->int_lot ? $row->int_lot->int_lot : '';
+            });
+
             $table->addColumn('issuer_name', function ($row) {
                 return $row->issuer ? $row->issuer->name : '';
             });
@@ -92,17 +97,18 @@ class DeliveryNoteController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'client', 'product', 'issuer', 'document']);
+            $table->rawColumns(['actions', 'placeholder', 'client', 'product', 'int_lot', 'issuer', 'document']);
 
             return $table->make(true);
         }
 
         $crm_customers  = CrmCustomer::get();
         $products_lists = ProductsList::get();
+        $receipt_notes  = ReceiptNote::get();
         $users          = User::get();
         $teams          = Team::get();
 
-        return view('admin.deliveryNotes.index', compact('crm_customers', 'products_lists', 'users', 'teams'));
+        return view('admin.deliveryNotes.index', compact('crm_customers', 'products_lists', 'receipt_notes', 'users', 'teams'));
     }
 
     public function create()
@@ -113,9 +119,11 @@ class DeliveryNoteController extends Controller
 
         $products = ProductsList::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $int_lots = ReceiptNote::pluck('int_lot', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $issuers = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.deliveryNotes.create', compact('clients', 'issuers', 'products'));
+        return view('admin.deliveryNotes.create', compact('clients', 'int_lots', 'issuers', 'products'));
     }
 
     public function store(StoreDeliveryNoteRequest $request)
@@ -141,11 +149,13 @@ class DeliveryNoteController extends Controller
 
         $products = ProductsList::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $int_lots = ReceiptNote::pluck('int_lot', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $issuers = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $deliveryNote->load('client', 'product', 'issuer', 'team');
+        $deliveryNote->load('client', 'product', 'int_lot', 'issuer', 'team');
 
-        return view('admin.deliveryNotes.edit', compact('clients', 'deliveryNote', 'issuers', 'products'));
+        return view('admin.deliveryNotes.edit', compact('clients', 'deliveryNote', 'int_lots', 'issuers', 'products'));
     }
 
     public function update(UpdateDeliveryNoteRequest $request, DeliveryNote $deliveryNote)
@@ -173,7 +183,7 @@ class DeliveryNoteController extends Controller
     {
         abort_if(Gate::denies('delivery_note_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $deliveryNote->load('client', 'product', 'issuer', 'team');
+        $deliveryNote->load('client', 'product', 'int_lot', 'issuer', 'team');
 
         return view('admin.deliveryNotes.show', compact('deliveryNote'));
     }

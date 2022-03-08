@@ -29,6 +29,10 @@ class StoreDeliveryNoteRequest extends FormRequest
                 'numeric',
                 'required',
             ],
+            'int_lot_id' => [
+                'required',
+                'integer',
+            ],
             'issuer_id' => [
                 'required',
                 'integer',

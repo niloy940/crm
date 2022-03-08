@@ -36,6 +36,7 @@ class DeliveryNote extends Model implements HasMedia
         'client_id',
         'product_id',
         'quantity',
+        'int_lot_id',
         'issuer_id',
         'created_at',
         'updated_at',
@@ -57,6 +58,11 @@ class DeliveryNote extends Model implements HasMedia
     public function product()
     {
         return $this->belongsTo(ProductsList::class, 'product_id');
+    }
+
+    public function int_lot()
+    {
+        return $this->belongsTo(ReceiptNote::class, 'int_lot_id');
     }
 
     public function issuer()

@@ -41,6 +41,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.deliveryNote.fields.int_lot') }}
+                        </th>
+                        <td>
+                            {{ $deliveryNote->int_lot->int_lot ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.deliveryNote.fields.quantity') }}
                         </th>
                         <td>

@@ -29,6 +29,10 @@ class StoreWarehouseTransferRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'int_lot_id' => [
+                'required',
+                'integer',
+            ],
             'quantity' => [
                 'numeric',
                 'required',

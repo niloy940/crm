@@ -47,6 +47,9 @@
                         {{ trans('cruds.deliveryNote.fields.product') }}
                     </th>
                     <th>
+                        {{ trans('cruds.deliveryNote.fields.int_lot') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.deliveryNote.fields.quantity') }}
                     </th>
                     <th>
@@ -86,6 +89,14 @@
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($products_lists as $key => $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($receipt_notes as $key => $item)
+                                <option value="{{ $item->int_lot }}">{{ $item->int_lot }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -164,6 +175,7 @@
 { data: 'client.address', name: 'client.address' },
 { data: 'client.tax_no', name: 'client.tax_no' },
 { data: 'product_name', name: 'product.name' },
+{ data: 'int_lot_int_lot', name: 'int_lot.int_lot' },
 { data: 'quantity', name: 'quantity' },
 { data: 'issuer_name', name: 'issuer.name' },
 { data: 'document', name: 'document', sortable: false, searchable: false },

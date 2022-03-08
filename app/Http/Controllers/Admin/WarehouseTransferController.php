@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyWarehouseTransferRequest;
 use App\Http\Requests\StoreWarehouseTransferRequest;
 use App\Http\Requests\UpdateWarehouseTransferRequest;
 use App\Models\ProductsList;
+use App\Models\ReceiptNote;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\WarehousesList;
@@ -23,7 +24,7 @@ class WarehouseTransferController extends Controller
         abort_if(Gate::denies('warehouse_transfer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = WarehouseTransfer::with(['warehouse_from', 'warehouse_to', 'product', 'user', 'user_received', 'team'])->select(sprintf('%s.*', (new WarehouseTransfer())->table));
+            $query = WarehouseTransfer::with(['warehouse_from', 'warehouse_to', 'product', 'int_lot', 'user', 'user_received', 'team'])->select(sprintf('%s.*', (new WarehouseTransfer())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -59,6 +60,10 @@ class WarehouseTransferController extends Controller
                 return $row->product ? $row->product->name : '';
             });
 
+            $table->addColumn('int_lot_int_lot', function ($row) {
+                return $row->int_lot ? $row->int_lot->int_lot : '';
+            });
+
             $table->editColumn('quantity', function ($row) {
                 return $row->quantity ? $row->quantity : '';
             });
@@ -70,17 +75,18 @@ class WarehouseTransferController extends Controller
                 return $row->user_received ? $row->user_received->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'warehouse_from', 'warehouse_to', 'product', 'user', 'user_received']);
+            $table->rawColumns(['actions', 'placeholder', 'warehouse_from', 'warehouse_to', 'product', 'int_lot', 'user', 'user_received']);
 
             return $table->make(true);
         }
 
         $warehouses_lists = WarehousesList::get();
         $products_lists   = ProductsList::get();
+        $receipt_notes    = ReceiptNote::get();
         $users            = User::get();
         $teams            = Team::get();
 
-        return view('admin.warehouseTransfers.index', compact('warehouses_lists', 'products_lists', 'users', 'teams'));
+        return view('admin.warehouseTransfers.index', compact('warehouses_lists', 'products_lists', 'receipt_notes', 'users', 'teams'));
     }
 
     public function create()
@@ -93,11 +99,13 @@ class WarehouseTransferController extends Controller
 
         $products = ProductsList::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $int_lots = ReceiptNote::pluck('int_lot', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $user_receiveds = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.warehouseTransfers.create', compact('products', 'user_receiveds', 'users', 'warehouse_froms', 'warehouse_tos'));
+        return view('admin.warehouseTransfers.create', compact('int_lots', 'products', 'user_receiveds', 'users', 'warehouse_froms', 'warehouse_tos'));
     }
 
     public function store(StoreWarehouseTransferRequest $request)
@@ -115,9 +123,11 @@ class WarehouseTransferController extends Controller
 
         $warehouse_tos = WarehousesList::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $warehouseTransfer->load('warehouse_from', 'warehouse_to', 'product', 'user', 'user_received', 'team');
+        $int_lots = ReceiptNote::pluck('int_lot', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.warehouseTransfers.edit', compact('warehouseTransfer', 'warehouse_froms', 'warehouse_tos'));
+        $warehouseTransfer->load('warehouse_from', 'warehouse_to', 'product', 'int_lot', 'user', 'user_received', 'team');
+
+        return view('admin.warehouseTransfers.edit', compact('int_lots', 'warehouseTransfer', 'warehouse_froms', 'warehouse_tos'));
     }
 
     public function update(UpdateWarehouseTransferRequest $request, WarehouseTransfer $warehouseTransfer)
@@ -131,7 +141,7 @@ class WarehouseTransferController extends Controller
     {
         abort_if(Gate::denies('warehouse_transfer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $warehouseTransfer->load('warehouse_from', 'warehouse_to', 'product', 'user', 'user_received', 'team');
+        $warehouseTransfer->load('warehouse_from', 'warehouse_to', 'product', 'int_lot', 'user', 'user_received', 'team');
 
         return view('admin.warehouseTransfers.show', compact('warehouseTransfer'));
     }

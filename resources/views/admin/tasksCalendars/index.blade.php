@@ -31,7 +31,8 @@
 @if($event->due_date)
                             {
                                 title : '{{ $event->name }}',
-                                start : '{{ \Carbon\Carbon::createFromFormat(config('panel.date_format'),$event->due_date)->format('Y-m-d') }}',
+                                start : '{{ \Carbon\Carbon::createFromFormat(config('panel.date_format'),$event->start_date)->format('Y-m-d') }}',
+                                end : '{{ \Carbon\Carbon::createFromFormat(config('panel.date_format'),$event->due_date)->format('Y-m-d') }}',
                                 url : '{{ url('admin/tasks').'/'.$event->id.'/edit' }}'
                             },
 @endif

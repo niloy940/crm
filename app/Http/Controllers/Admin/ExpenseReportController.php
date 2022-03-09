@@ -27,8 +27,8 @@ class ExpenseReportController extends Controller
 
         $expensesTotal   = $expenses->sum('amount');
         $incomesTotal    = $incomes->sum('amount');
-        $groupedExpenses = $expenses->whereNotNull('expense_category_id')->orderBy('amount', 'desc')->get()->groupBy('expense_category_id');
-        $groupedIncomes  = $incomes->whereNotNull('income_category_id')->orderBy('amount', 'desc')->get()->groupBy('income_category_id');
+        $groupedExpenses = $expenses->whereNotNull(['expense_category_id', 'entry_date'])->orderBy('amount', 'desc')->get()->groupBy('expense_category_id');
+        $groupedIncomes  = $incomes->whereNotNull(['income_category_id', 'entry_date'])->orderBy('amount', 'desc')->get()->groupBy('income_category_id');;
         $profit          = $incomesTotal - $expensesTotal;
 
         $expensesSummary = [];
@@ -37,6 +37,7 @@ class ExpenseReportController extends Controller
                 if (!isset($expensesSummary[$line->expense_category->name])) {
                     $expensesSummary[$line->expense_category->name] = [
                         'name'   => $line->expense_category->name,
+                        'date'  => Carbon::parse($line->entry_date),
                         'amount' => 0,
                     ];
                 }
@@ -50,6 +51,7 @@ class ExpenseReportController extends Controller
                 if (!isset($incomesSummary[$line->income_category->name])) {
                     $incomesSummary[$line->income_category->name] = [
                         'name'   => $line->income_category->name,
+                        'date'  => Carbon::parse($line->entry_date),
                         'amount' => 0,
                     ];
                 }

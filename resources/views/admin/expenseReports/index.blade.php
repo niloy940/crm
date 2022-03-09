@@ -62,11 +62,13 @@
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>{{ trans('cruds.expenseReport.reports.incomeByCategory') }}</th>
+                        <th>Day</th>
                         <th>{{ number_format($incomesTotal, 2) }}</th>
                     </tr>
                     @foreach($incomesSummary as $inc)
                         <tr>
                             <th>{{ $inc['name'] }}</th>
+                            <th>{{ $inc['date']->format('m') }}</th>
                             <td>{{ number_format($inc['amount'], 2) }}</td>
                         </tr>
                     @endforeach
@@ -76,11 +78,13 @@
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>{{ trans('cruds.expenseReport.reports.expenseByCategory') }}</th>
+                        <th>Day</th>
                         <th>{{ number_format($expensesTotal, 2) }}</th>
                     </tr>
                     @foreach($expensesSummary as $inc)
                         <tr>
                             <th>{{ $inc['name'] }}</th>
+                            <th>{{ $inc['date']->format('m') }}</th>
                             <td>{{ number_format($inc['amount'], 2) }}</td>
                         </tr>
                     @endforeach

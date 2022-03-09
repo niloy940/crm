@@ -1,5 +1,5 @@
 My spoon CRM to do:
-Model name	Description	Priority
+
 1.	Product balances 
       
 Make max balance and reserved balance, list total balance for each product, put info for under optimal and warning for under minimal, make that reserved products are not listed on total sum 

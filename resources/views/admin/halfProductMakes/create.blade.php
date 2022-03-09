@@ -17,9 +17,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('halfproduct'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('halfproduct') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('halfproduct') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.halfProductMake.fields.halfproduct_helper') }}</span>
             </div>
@@ -35,9 +33,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('ingridients'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('ingridients') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('ingridients') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.halfProductMake.fields.ingridients_helper') }}</span>
             </div>
@@ -45,9 +41,7 @@
                 <label class="required" for="quantity">{{ trans('cruds.halfProductMake.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.01" required>
                 @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.halfProductMake.fields.quantity_helper') }}</span>
             </div>
@@ -63,9 +57,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('int_lots'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('int_lots') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('int_lots') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.halfProductMake.fields.int_lot_helper') }}</span>
             </div>
@@ -77,9 +69,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('made_by'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('made_by') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('made_by') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.halfProductMake.fields.made_by_helper') }}</span>
             </div>

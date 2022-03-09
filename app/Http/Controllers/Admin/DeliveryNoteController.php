@@ -74,13 +74,13 @@ class DeliveryNoteController extends Controller
                 return $row->product ? $row->product->name : '';
             });
 
-            $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
-            });
             $table->addColumn('int_lot_int_lot', function ($row) {
                 return $row->int_lot ? $row->int_lot->int_lot : '';
             });
 
+            $table->editColumn('quantity', function ($row) {
+                return $row->quantity ? $row->quantity : '';
+            });
             $table->addColumn('issuer_name', function ($row) {
                 return $row->issuer ? $row->issuer->name : '';
             });

@@ -11,56 +11,16 @@ use App\Models\ProductPrice;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductPriceController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('product_price_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ProductPrice::with(['bom', 'team'])->select(sprintf('%s.*', (new ProductPrice())->table));
-            $table = Datatables::of($query);
+        $productPrices = ProductPrice::with(['bom', 'team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'product_price_show';
-                $editGate = 'product_price_edit';
-                $deleteGate = 'product_price_delete';
-                $crudRoutePart = 'product-prices';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('bom_name', function ($row) {
-                return $row->bom ? $row->bom->name : '';
-            });
-
-            $table->editColumn('bom.total', function ($row) {
-                return $row->bom ? (is_string($row->bom) ? $row->bom : $row->bom->total) : '';
-            });
-            $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'bom']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.productPrices.index');
+        return view('admin.productPrices.index', compact('productPrices'));
     }
 
     public function create()

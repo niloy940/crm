@@ -18,9 +18,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('bom'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('bom') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('bom') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productPrice.fields.bom_helper') }}</span>
             </div>
@@ -28,9 +26,7 @@
                 <label for="quantity">{{ trans('cruds.productPrice.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', $productPrice->quantity) }}" step="0.01">
                 @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productPrice.fields.quantity_helper') }}</span>
             </div>

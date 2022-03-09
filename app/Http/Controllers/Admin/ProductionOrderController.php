@@ -11,49 +11,16 @@ use App\Models\ProductionOrder;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductionOrderController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('production_order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ProductionOrder::with(['client', 'team'])->select(sprintf('%s.*', (new ProductionOrder())->table));
-            $table = Datatables::of($query);
+        $productionOrders = ProductionOrder::with(['client', 'team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'production_order_show';
-                $editGate = 'production_order_edit';
-                $deleteGate = 'production_order_delete';
-                $crudRoutePart = 'production-orders';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('client_company_name', function ($row) {
-                return $row->client ? $row->client->company_name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'client']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.productionOrders.index');
+        return view('admin.productionOrders.index', compact('productionOrders'));
     }
 
     public function create()

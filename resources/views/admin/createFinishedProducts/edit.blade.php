@@ -19,9 +19,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('shift'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('shift') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('shift') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.shift_helper') }}</span>
             </div>
@@ -37,9 +35,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('products'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('products') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('products') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.product_helper') }}</span>
             </div>
@@ -47,9 +43,7 @@
                 <label class="required" for="quantity">{{ trans('cruds.createFinishedProduct.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', $createFinishedProduct->quantity) }}" step="0.01" required>
                 @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.quantity_helper') }}</span>
             </div>
@@ -61,9 +55,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('user'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('user') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('user') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.user_helper') }}</span>
             </div>
@@ -71,9 +63,7 @@
                 <label class="required" for="expiry_date">{{ trans('cruds.createFinishedProduct.fields.expiry_date') }}</label>
                 <input class="form-control date {{ $errors->has('expiry_date') ? 'is-invalid' : '' }}" type="text" name="expiry_date" id="expiry_date" value="{{ old('expiry_date', $createFinishedProduct->expiry_date) }}" required>
                 @if($errors->has('expiry_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('expiry_date') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('expiry_date') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.expiry_date_helper') }}</span>
             </div>
@@ -85,9 +75,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('processing_spent'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('processing_spent') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('processing_spent') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.processing_spent_helper') }}</span>
             </div>

@@ -13,9 +13,7 @@
                 <label class="required" for="name">{{ trans('cruds.billMaterial.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                 @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.name_helper') }}</span>
             </div>
@@ -27,9 +25,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('for_product'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('for_product') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('for_product') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.for_product_helper') }}</span>
             </div>
@@ -45,9 +41,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('ingridients'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('ingridients') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('ingridients') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.ingridients_helper') }}</span>
             </div>
@@ -55,9 +49,7 @@
                 <label class="required" for="price">{{ trans('cruds.billMaterial.fields.price') }}</label>
                 <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', '') }}" step="0.001" required>
                 @if($errors->has('price'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('price') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('price') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.price_helper') }}</span>
             </div>
@@ -65,9 +57,7 @@
                 <label class="required" for="quantity">{{ trans('cruds.billMaterial.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
                 @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.quantity_helper') }}</span>
             </div>
@@ -75,9 +65,7 @@
                 <label class="required" for="coefficient">{{ trans('cruds.billMaterial.fields.coefficient') }}</label>
                 <input class="form-control {{ $errors->has('coefficient') ? 'is-invalid' : '' }}" type="number" name="coefficient" id="coefficient" value="{{ old('coefficient', '') }}" step="0.001" required>
                 @if($errors->has('coefficient'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('coefficient') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('coefficient') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.coefficient_helper') }}</span>
             </div>

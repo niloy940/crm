@@ -12,55 +12,18 @@ use App\Models\CrmNote;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class CrmNoteController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('crm_note_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = CrmNote::with(['customer', 'team'])->select(sprintf('%s.*', (new CrmNote())->table));
-            $table = Datatables::of($query);
+        $crmNotes = CrmNote::with(['customer', 'team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'crm_note_show';
-                $editGate = 'crm_note_edit';
-                $deleteGate = 'crm_note_delete';
-                $crudRoutePart = 'crm-notes';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('customer_first_name', function ($row) {
-                return $row->customer ? $row->customer->first_name : '';
-            });
-
-            $table->editColumn('note', function ($row) {
-                return $row->note ? $row->note : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'customer']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.crmNotes.index');
+        return view('admin.crmNotes.index', compact('crmNotes'));
     }
 
     public function create()

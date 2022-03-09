@@ -13,76 +13,22 @@ use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class CrmCustomerController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('crm_customer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = CrmCustomer::with(['status', 'team'])->select(sprintf('%s.*', (new CrmCustomer())->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'crm_customer_show';
-                $editGate = 'crm_customer_edit';
-                $deleteGate = 'crm_customer_delete';
-                $crudRoutePart = 'crm-customers';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('company_name', function ($row) {
-                return $row->company_name ? $row->company_name : '';
-            });
-            $table->editColumn('first_name', function ($row) {
-                return $row->first_name ? $row->first_name : '';
-            });
-            $table->editColumn('last_name', function ($row) {
-                return $row->last_name ? $row->last_name : '';
-            });
-            $table->editColumn('tax_no', function ($row) {
-                return $row->tax_no ? $row->tax_no : '';
-            });
-            $table->addColumn('status_name', function ($row) {
-                return $row->status ? $row->status->name : '';
-            });
-
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
-            });
-            $table->editColumn('phone', function ($row) {
-                return $row->phone ? $row->phone : '';
-            });
-            $table->editColumn('address', function ($row) {
-                return $row->address ? $row->address : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'status']);
-
-            return $table->make(true);
-        }
+        $crmCustomers = CrmCustomer::with(['status', 'team'])->get();
 
         $crm_statuses = CrmStatus::get();
-        $teams        = Team::get();
 
-        return view('admin.crmCustomers.index', compact('crm_statuses', 'teams'));
+        $teams = Team::get();
+
+        return view('admin.crmCustomers.index', compact('crmCustomers', 'crm_statuses', 'teams'));
     }
 
     public function create()

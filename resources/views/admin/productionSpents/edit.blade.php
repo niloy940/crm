@@ -14,9 +14,7 @@
                 <label class="required" for="name">{{ trans('cruds.productionSpent.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $productionSpent->name) }}" required>
                 @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.name_helper') }}</span>
             </div>
@@ -32,9 +30,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('products'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('products') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('products') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.product_helper') }}</span>
             </div>
@@ -42,9 +38,7 @@
                 <label class="required" for="quantity">{{ trans('cruds.productionSpent.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', $productionSpent->quantity) }}" step="0.001" required>
                 @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.quantity_helper') }}</span>
             </div>
@@ -57,9 +51,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('shift'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('shift') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('shift') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.shift_helper') }}</span>
             </div>
@@ -67,9 +59,7 @@
                 <label class="required" for="date_time">{{ trans('cruds.productionSpent.fields.date_time') }}</label>
                 <input class="form-control datetime {{ $errors->has('date_time') ? 'is-invalid' : '' }}" type="text" name="date_time" id="date_time" value="{{ old('date_time', $productionSpent->date_time) }}" required>
                 @if($errors->has('date_time'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('date_time') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('date_time') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.date_time_helper') }}</span>
             </div>
@@ -81,9 +71,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('ingridients'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('ingridients') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('ingridients') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.ingridients_helper') }}</span>
             </div>
@@ -91,9 +79,7 @@
                 <label class="required" for="quantity_ing">{{ trans('cruds.productionSpent.fields.quantity_ing') }}</label>
                 <input class="form-control {{ $errors->has('quantity_ing') ? 'is-invalid' : '' }}" type="number" name="quantity_ing" id="quantity_ing" value="{{ old('quantity_ing', $productionSpent->quantity_ing) }}" step="0.001" required>
                 @if($errors->has('quantity_ing'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity_ing') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('quantity_ing') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.quantity_ing_helper') }}</span>
             </div>

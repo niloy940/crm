@@ -14,9 +14,7 @@
                 <label class="required" for="name">{{ trans('cruds.productsList.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $productsList->name) }}" required>
                 @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productsList.fields.name_helper') }}</span>
             </div>
@@ -28,9 +26,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('warehouse'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('warehouse') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('warehouse') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productsList.fields.warehouse_helper') }}</span>
             </div>
@@ -38,9 +34,7 @@
                 <label class="required" for="price">{{ trans('cruds.productsList.fields.price') }}</label>
                 <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', $productsList->price) }}" step="0.01" required>
                 @if($errors->has('price'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('price') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('price') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productsList.fields.price_helper') }}</span>
             </div>
@@ -53,9 +47,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('measure'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('measure') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('measure') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productsList.fields.measure_helper') }}</span>
             </div>
@@ -63,9 +55,7 @@
                 <label class="required" for="balance_optimal">{{ trans('cruds.productsList.fields.balance_optimal') }}</label>
                 <input class="form-control {{ $errors->has('balance_optimal') ? 'is-invalid' : '' }}" type="number" name="balance_optimal" id="balance_optimal" value="{{ old('balance_optimal', $productsList->balance_optimal) }}" step="0.01" required>
                 @if($errors->has('balance_optimal'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('balance_optimal') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('balance_optimal') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productsList.fields.balance_optimal_helper') }}</span>
             </div>
@@ -73,9 +63,7 @@
                 <label class="required" for="balance_min">{{ trans('cruds.productsList.fields.balance_min') }}</label>
                 <input class="form-control {{ $errors->has('balance_min') ? 'is-invalid' : '' }}" type="number" name="balance_min" id="balance_min" value="{{ old('balance_min', $productsList->balance_min) }}" step="0.01" required>
                 @if($errors->has('balance_min'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('balance_min') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('balance_min') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productsList.fields.balance_min_helper') }}</span>
             </div>
@@ -83,9 +71,7 @@
                 <label class="required" for="balance_max">{{ trans('cruds.productsList.fields.balance_max') }}</label>
                 <input class="form-control {{ $errors->has('balance_max') ? 'is-invalid' : '' }}" type="number" name="balance_max" id="balance_max" value="{{ old('balance_max', $productsList->balance_max) }}" step="0.01" required>
                 @if($errors->has('balance_max'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('balance_max') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('balance_max') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productsList.fields.balance_max_helper') }}</span>
             </div>

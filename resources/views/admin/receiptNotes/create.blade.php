@@ -17,9 +17,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('client'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('client') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('client') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.client_helper') }}</span>
             </div>
@@ -35,9 +33,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('products'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('products') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('products') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.product_helper') }}</span>
             </div>
@@ -45,9 +41,7 @@
                 <label class="required" for="quantity">{{ trans('cruds.receiptNote.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
                 @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.quantity_helper') }}</span>
             </div>
@@ -55,9 +49,7 @@
                 <label class="required" for="lot">{{ trans('cruds.receiptNote.fields.lot') }}</label>
                 <input class="form-control {{ $errors->has('lot') ? 'is-invalid' : '' }}" type="text" name="lot" id="lot" value="{{ old('lot', '') }}" required>
                 @if($errors->has('lot'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('lot') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('lot') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.lot_helper') }}</span>
             </div>
@@ -65,9 +57,7 @@
                 <label class="required" for="int_lot">{{ trans('cruds.receiptNote.fields.int_lot') }}</label>
                 <input class="form-control {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" type="text" name="int_lot" id="int_lot" value="{{ old('int_lot', '') }}" required>
                 @if($errors->has('int_lot'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('int_lot') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('int_lot') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.int_lot_helper') }}</span>
             </div>
@@ -75,9 +65,7 @@
                 <label class="required" for="expiry_date">{{ trans('cruds.receiptNote.fields.expiry_date') }}</label>
                 <input class="form-control date {{ $errors->has('expiry_date') ? 'is-invalid' : '' }}" type="text" name="expiry_date" id="expiry_date" value="{{ old('expiry_date') }}" required>
                 @if($errors->has('expiry_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('expiry_date') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('expiry_date') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.expiry_date_helper') }}</span>
             </div>
@@ -89,9 +77,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('warehouse'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('warehouse') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('warehouse') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.warehouse_helper') }}</span>
             </div>
@@ -104,9 +90,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('qc'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('qc') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('qc') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.qc_helper') }}</span>
             </div>
@@ -119,9 +103,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('conditions'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('conditions') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('conditions') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.conditions_helper') }}</span>
             </div>
@@ -134,9 +116,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('shift'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('shift') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('shift') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.shift_helper') }}</span>
             </div>
@@ -144,9 +124,7 @@
                 <label class="required" for="date">{{ trans('cruds.receiptNote.fields.date') }}</label>
                 <input class="form-control date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date') }}" required>
                 @if($errors->has('date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('date') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('date') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.date_helper') }}</span>
             </div>
@@ -154,9 +132,7 @@
                 <label class="required" for="place">{{ trans('cruds.receiptNote.fields.place') }}</label>
                 <input class="form-control {{ $errors->has('place') ? 'is-invalid' : '' }}" type="text" name="place" id="place" value="{{ old('place', 'Banatski Karlovac') }}" required>
                 @if($errors->has('place'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('place') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('place') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.place_helper') }}</span>
             </div>
@@ -164,9 +140,7 @@
                 <label class="required" for="driver">{{ trans('cruds.receiptNote.fields.driver') }}</label>
                 <input class="form-control {{ $errors->has('driver') ? 'is-invalid' : '' }}" type="text" name="driver" id="driver" value="{{ old('driver', '') }}" required>
                 @if($errors->has('driver'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('driver') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('driver') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.driver_helper') }}</span>
             </div>
@@ -174,9 +148,7 @@
                 <label class="required" for="id_driver">{{ trans('cruds.receiptNote.fields.id_driver') }}</label>
                 <input class="form-control {{ $errors->has('id_driver') ? 'is-invalid' : '' }}" type="text" name="id_driver" id="id_driver" value="{{ old('id_driver', '') }}" required>
                 @if($errors->has('id_driver'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_driver') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('id_driver') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.id_driver_helper') }}</span>
             </div>
@@ -184,9 +156,7 @@
                 <label class="required" for="registration">{{ trans('cruds.receiptNote.fields.registration') }}</label>
                 <input class="form-control {{ $errors->has('registration') ? 'is-invalid' : '' }}" type="text" name="registration" id="registration" value="{{ old('registration', '') }}" required>
                 @if($errors->has('registration'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('registration') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('registration') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.registration_helper') }}</span>
             </div>

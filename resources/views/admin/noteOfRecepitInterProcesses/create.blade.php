@@ -21,9 +21,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('products'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('products') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('products') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.product_helper') }}</span>
             </div>
@@ -35,9 +33,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('int_lot'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('int_lot') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('int_lot') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.int_lot_helper') }}</span>
             </div>
@@ -45,9 +41,7 @@
                 <label class="required" for="quantity">{{ trans('cruds.noteOfRecepitInterProcess.fields.quantity') }}</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
                 @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.quantity_helper') }}</span>
             </div>
@@ -59,9 +53,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('warehouse'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('warehouse') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('warehouse') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.warehouse_helper') }}</span>
             </div>
@@ -74,9 +66,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('qc'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('qc') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('qc') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.qc_helper') }}</span>
             </div>
@@ -89,9 +79,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('conditions'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('conditions') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('conditions') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.conditions_helper') }}</span>
             </div>
@@ -104,9 +92,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('shift'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('shift') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('shift') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.shift_helper') }}</span>
             </div>
@@ -114,9 +100,7 @@
                 <label class="required" for="date">{{ trans('cruds.noteOfRecepitInterProcess.fields.date') }}</label>
                 <input class="form-control date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date') }}" required>
                 @if($errors->has('date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('date') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('date') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.date_helper') }}</span>
             </div>
@@ -128,9 +112,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('issuer'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('issuer') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('issuer') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.issuer_helper') }}</span>
             </div>
@@ -142,9 +124,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('received_by'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('received_by') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('received_by') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.noteOfRecepitInterProcess.fields.received_by_helper') }}</span>
             </div>

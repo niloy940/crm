@@ -15,69 +15,26 @@ use App\Models\TimeProject;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class TimeEntryController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('time_entry_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = TimeEntry::with(['project', 'client', 'products', 'team'])->select(sprintf('%s.*', (new TimeEntry())->table));
-            $table = Datatables::of($query);
+        $timeEntries = TimeEntry::with(['project', 'client', 'products', 'team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $time_projects = TimeProject::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'time_entry_show';
-                $editGate = 'time_entry_edit';
-                $deleteGate = 'time_entry_delete';
-                $crudRoutePart = 'time-entries';
+        $crm_customers = CrmCustomer::get();
 
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('project_name', function ($row) {
-                return $row->project ? $row->project->name : '';
-            });
-
-            $table->addColumn('client_company_name', function ($row) {
-                return $row->client ? $row->client->company_name : '';
-            });
-
-            $table->editColumn('products', function ($row) {
-                $labels = [];
-                foreach ($row->products as $product) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $product->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'project', 'client', 'products']);
-
-            return $table->make(true);
-        }
-
-        $time_projects  = TimeProject::get();
-        $crm_customers  = CrmCustomer::get();
         $products_lists = ProductsList::get();
-        $teams          = Team::get();
 
-        return view('admin.timeEntries.index', compact('time_projects', 'crm_customers', 'products_lists', 'teams'));
+        $teams = Team::get();
+
+        return view('admin.timeEntries.index', compact('crm_customers', 'products_lists', 'teams', 'timeEntries', 'time_projects'));
     }
 
     public function create()

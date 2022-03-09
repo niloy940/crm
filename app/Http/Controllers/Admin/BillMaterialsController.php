@@ -11,73 +11,16 @@ use App\Models\ProductsList;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class BillMaterialsController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('bill_material_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = BillMaterial::with(['for_product', 'ingridients', 'team'])->select(sprintf('%s.*', (new BillMaterial())->table));
-            $table = Datatables::of($query);
+        $billMaterials = BillMaterial::with(['for_product', 'ingridients', 'team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'bill_material_show';
-                $editGate = 'bill_material_edit';
-                $deleteGate = 'bill_material_delete';
-                $crudRoutePart = 'bill-materials';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->addColumn('for_product_name', function ($row) {
-                return $row->for_product ? $row->for_product->name : '';
-            });
-
-            $table->editColumn('for_product.price', function ($row) {
-                return $row->for_product ? (is_string($row->for_product) ? $row->for_product : $row->for_product->price) : '';
-            });
-            $table->editColumn('ingridients', function ($row) {
-                $labels = [];
-                foreach ($row->ingridients as $ingridient) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $ingridient->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : '';
-            });
-            $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
-            });
-            $table->editColumn('coefficient', function ($row) {
-                return $row->coefficient ? $row->coefficient : '';
-            });
-            $table->editColumn('total', function ($row) {
-                return $row->total ? $row->total : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'for_product', 'ingridients']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.billMaterials.index');
+        return view('admin.billMaterials.index', compact('billMaterials'));
     }
 
     public function create()

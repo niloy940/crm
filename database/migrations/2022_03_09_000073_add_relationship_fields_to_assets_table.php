@@ -17,6 +17,8 @@ class AddRelationshipFieldsToAssetsTable extends Migration
             $table->foreign('location_id', 'location_fk_5994896')->references('id')->on('asset_locations');
             $table->unsignedBigInteger('assigned_to_id')->nullable();
             $table->foreign('assigned_to_id', 'assigned_to_fk_5994898')->references('id')->on('users');
+            $table->unsignedBigInteger('team_id')->nullable();
+            $table->foreign('team_id', 'team_fk_6160110')->references('id')->on('teams');
         });
     }
 }

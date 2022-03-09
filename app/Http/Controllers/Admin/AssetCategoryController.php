@@ -11,51 +11,18 @@ use App\Models\AssetCategory;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AssetCategoryController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('asset_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = AssetCategory::with(['team'])->select(sprintf('%s.*', (new AssetCategory())->table));
-            $table = Datatables::of($query);
+        $assetCategories = AssetCategory::with(['team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'asset_category_show';
-                $editGate = 'asset_category_edit';
-                $deleteGate = 'asset_category_delete';
-                $crudRoutePart = 'asset-categories';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.assetCategories.index');
+        return view('admin.assetCategories.index', compact('assetCategories'));
     }
 
     public function create()

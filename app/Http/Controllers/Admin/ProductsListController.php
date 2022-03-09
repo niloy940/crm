@@ -12,61 +12,18 @@ use App\Models\WarehousesList;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductsListController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('products_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ProductsList::with(['warehouse', 'int_lots', 'team'])->select(sprintf('%s.*', (new ProductsList())->table));
-            $table = Datatables::of($query);
+        $productsLists = ProductsList::with(['warehouse', 'int_lots', 'team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'products_list_show';
-                $editGate = 'products_list_edit';
-                $deleteGate = 'products_list_delete';
-                $crudRoutePart = 'products-lists';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->addColumn('warehouse_name', function ($row) {
-                return $row->warehouse ? $row->warehouse->name : '';
-            });
-
-            $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : '';
-            });
-            $table->editColumn('balance_max', function ($row) {
-                return $row->balance_max ? $row->balance_max : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'warehouse']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.productsLists.index');
+        return view('admin.productsLists.index', compact('productsLists'));
     }
 
     public function create()

@@ -12,64 +12,16 @@ use App\Models\ProductsList;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductBalanceProcessingController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('product_balance_processing_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ProductBalanceProcessing::with(['halfproduct', 'balance_min', 'balance_optimal', 'team'])->select(sprintf('%s.*', (new ProductBalanceProcessing())->table));
-            $table = Datatables::of($query);
+        $productBalanceProcessings = ProductBalanceProcessing::with(['halfproduct', 'balance_min', 'balance_optimal', 'team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'product_balance_processing_show';
-                $editGate = 'product_balance_processing_edit';
-                $deleteGate = 'product_balance_processing_delete';
-                $crudRoutePart = 'product-balance-processings';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->addColumn('halfproduct_quantity', function ($row) {
-                return $row->halfproduct ? $row->halfproduct->quantity : '';
-            });
-
-            $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
-            });
-            $table->addColumn('balance_min_balance_min', function ($row) {
-                return $row->balance_min ? $row->balance_min->balance_min : '';
-            });
-
-            $table->addColumn('balance_optimal_balance_optimal', function ($row) {
-                return $row->balance_optimal ? $row->balance_optimal->balance_optimal : '';
-            });
-
-            $table->editColumn('balance_max', function ($row) {
-                return $row->balance_max ? $row->balance_max : '';
-            });
-            $table->editColumn('balance_reserved', function ($row) {
-                return $row->balance_reserved ? $row->balance_reserved : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'halfproduct', 'balance_min', 'balance_optimal']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.productBalanceProcessings.index');
+        return view('admin.productBalanceProcessings.index', compact('productBalanceProcessings'));
     }
 
     public function create()

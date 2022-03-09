@@ -25,7 +25,7 @@ class AssetController extends Controller
     {
         abort_if(Gate::denies('asset_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $assets = Asset::with(['category', 'status', 'location', 'assigned_to', 'media'])->get();
+        $assets = Asset::with(['category', 'status', 'location', 'assigned_to', 'team', 'media'])->get();
 
         return view('admin.assets.index', compact('assets'));
     }
@@ -72,7 +72,7 @@ class AssetController extends Controller
 
         $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $asset->load('category', 'status', 'location', 'assigned_to');
+        $asset->load('category', 'status', 'location', 'assigned_to', 'team');
 
         return view('admin.assets.edit', compact('asset', 'assigned_tos', 'categories', 'locations', 'statuses'));
     }
@@ -102,7 +102,7 @@ class AssetController extends Controller
     {
         abort_if(Gate::denies('asset_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $asset->load('category', 'status', 'location', 'assigned_to');
+        $asset->load('category', 'status', 'location', 'assigned_to', 'team');
 
         return view('admin.assets.show', compact('asset'));
     }

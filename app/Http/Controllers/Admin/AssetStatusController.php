@@ -11,51 +11,18 @@ use App\Models\AssetStatus;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AssetStatusController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('asset_status_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = AssetStatus::with(['team'])->select(sprintf('%s.*', (new AssetStatus())->table));
-            $table = Datatables::of($query);
+        $assetStatuses = AssetStatus::with(['team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'asset_status_show';
-                $editGate = 'asset_status_edit';
-                $deleteGate = 'asset_status_delete';
-                $crudRoutePart = 'asset-statuses';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.assetStatuses.index');
+        return view('admin.assetStatuses.index', compact('assetStatuses'));
     }
 
     public function create()

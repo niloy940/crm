@@ -11,51 +11,18 @@ use App\Models\TimeProject;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class TimeProjectController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('time_project_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = TimeProject::with(['team'])->select(sprintf('%s.*', (new TimeProject())->table));
-            $table = Datatables::of($query);
+        $timeProjects = TimeProject::with(['team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'time_project_show';
-                $editGate = 'time_project_edit';
-                $deleteGate = 'time_project_delete';
-                $crudRoutePart = 'time-projects';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.timeProjects.index');
+        return view('admin.timeProjects.index', compact('timeProjects'));
     }
 
     public function create()

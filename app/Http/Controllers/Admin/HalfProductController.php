@@ -10,49 +10,16 @@ use App\Models\HalfProduct;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class HalfProductController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('half_product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = HalfProduct::with(['team'])->select(sprintf('%s.*', (new HalfProduct())->table));
-            $table = Datatables::of($query);
+        $halfProducts = HalfProduct::with(['team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'half_product_show';
-                $editGate = 'half_product_edit';
-                $deleteGate = 'half_product_delete';
-                $crudRoutePart = 'half-products';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.halfProducts.index');
+        return view('admin.halfProducts.index', compact('halfProducts'));
     }
 
     public function create()

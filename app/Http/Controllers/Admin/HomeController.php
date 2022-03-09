@@ -9,7 +9,7 @@ class HomeController
     public function index()
     {
         $settings1 = [
-            'chart_title'           => 'Last production costs',
+            'chart_title'           => 'Poslednje cene proizvodnje',
             'chart_type'            => 'latest_entries',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\BillMaterial',
@@ -40,7 +40,7 @@ class HomeController
         }
 
         $settings2 = [
-            'chart_title'        => 'Production usage',
+            'chart_title'        => 'Zauzece proizvodnje',
             'chart_type'         => 'bar',
             'report_type'        => 'group_by_string',
             'model'              => 'App\Models\Task',

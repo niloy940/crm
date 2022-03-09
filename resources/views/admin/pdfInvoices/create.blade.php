@@ -17,9 +17,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('customer'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('customer') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('customer') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.pdfInvoice.fields.customer_helper') }}</span>
             </div>
@@ -32,9 +30,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('type'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('type') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('type') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.pdfInvoice.fields.type_helper') }}</span>
             </div>
@@ -47,9 +43,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('status'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('status') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('status') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.pdfInvoice.fields.status_helper') }}</span>
             </div>
@@ -65,9 +59,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('products'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('products') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('products') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.pdfInvoice.fields.products_helper') }}</span>
             </div>
@@ -75,9 +67,7 @@
                 <label for="discount">{{ trans('cruds.pdfInvoice.fields.discount') }}</label>
                 <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}" type="number" name="discount" id="discount" value="{{ old('discount', '0') }}" step="0.01">
                 @if($errors->has('discount'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('discount') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('discount') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.pdfInvoice.fields.discount_helper') }}</span>
             </div>
@@ -85,9 +75,7 @@
                 <label for="pay_until">{{ trans('cruds.pdfInvoice.fields.pay_until') }}</label>
                 <input class="form-control {{ $errors->has('pay_until') ? 'is-invalid' : '' }}" type="number" name="pay_until" id="pay_until" value="{{ old('pay_until', '') }}" step="1">
                 @if($errors->has('pay_until'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('pay_until') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('pay_until') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.pdfInvoice.fields.pay_until_helper') }}</span>
             </div>
@@ -95,9 +83,7 @@
                 <label for="note">{{ trans('cruds.pdfInvoice.fields.note') }}</label>
                 <input class="form-control {{ $errors->has('note') ? 'is-invalid' : '' }}" type="text" name="note" id="note" value="{{ old('note', '') }}">
                 @if($errors->has('note'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('note') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('note') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.pdfInvoice.fields.note_helper') }}</span>
             </div>

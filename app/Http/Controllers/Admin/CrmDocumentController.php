@@ -15,65 +15,23 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class CrmDocumentController extends Controller
 {
     use MediaUploadingTrait;
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('crm_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = CrmDocument::with(['customer', 'team'])->select(sprintf('%s.*', (new CrmDocument())->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'crm_document_show';
-                $editGate = 'crm_document_edit';
-                $deleteGate = 'crm_document_delete';
-                $crudRoutePart = 'crm-documents';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->addColumn('customer_first_name', function ($row) {
-                return $row->customer ? $row->customer->first_name : '';
-            });
-
-            $table->editColumn('document_file', function ($row) {
-                return $row->document_file ? '<a href="' . $row->document_file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('type', function ($row) {
-                return $row->type ? CrmDocument::TYPE_SELECT[$row->type] : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'customer', 'document_file']);
-
-            return $table->make(true);
-        }
+        $crmDocuments = CrmDocument::with(['customer', 'team', 'media'])->get();
 
         $crm_customers = CrmCustomer::get();
-        $teams         = Team::get();
 
-        return view('admin.crmDocuments.index', compact('crm_customers', 'teams'));
+        $teams = Team::get();
+
+        return view('admin.crmDocuments.index', compact('crmDocuments', 'crm_customers', 'teams'));
     }
 
     public function create()

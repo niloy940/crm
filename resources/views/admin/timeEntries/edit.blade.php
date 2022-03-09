@@ -18,9 +18,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('project'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('project') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('project') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.timeEntry.fields.project_helper') }}</span>
             </div>
@@ -32,9 +30,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('client'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('client') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('client') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.timeEntry.fields.client_helper') }}</span>
             </div>
@@ -50,9 +46,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('products'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('products') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('products') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.timeEntry.fields.products_helper') }}</span>
             </div>
@@ -60,9 +54,7 @@
                 <label class="required" for="start_time">{{ trans('cruds.timeEntry.fields.start_time') }}</label>
                 <input class="form-control datetime {{ $errors->has('start_time') ? 'is-invalid' : '' }}" type="text" name="start_time" id="start_time" value="{{ old('start_time', $timeEntry->start_time) }}" required>
                 @if($errors->has('start_time'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('start_time') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('start_time') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.timeEntry.fields.start_time_helper') }}</span>
             </div>
@@ -70,9 +62,7 @@
                 <label class="required" for="end_time">{{ trans('cruds.timeEntry.fields.end_time') }}</label>
                 <input class="form-control datetime {{ $errors->has('end_time') ? 'is-invalid' : '' }}" type="text" name="end_time" id="end_time" value="{{ old('end_time', $timeEntry->end_time) }}" required>
                 @if($errors->has('end_time'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('end_time') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('end_time') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.timeEntry.fields.end_time_helper') }}</span>
             </div>

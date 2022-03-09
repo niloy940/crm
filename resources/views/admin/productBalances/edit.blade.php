@@ -18,9 +18,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('balance_optimal'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('balance_optimal') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('balance_optimal') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productBalance.fields.balance_optimal_helper') }}</span>
             </div>
@@ -32,9 +30,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('balance_min'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('balance_min') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('balance_min') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productBalance.fields.balance_min_helper') }}</span>
             </div>
@@ -42,9 +38,7 @@
                 <label for="balance_max">{{ trans('cruds.productBalance.fields.balance_max') }}</label>
                 <input class="form-control {{ $errors->has('balance_max') ? 'is-invalid' : '' }}" type="number" name="balance_max" id="balance_max" value="{{ old('balance_max', $productBalance->balance_max) }}" step="0.01">
                 @if($errors->has('balance_max'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('balance_max') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('balance_max') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productBalance.fields.balance_max_helper') }}</span>
             </div>

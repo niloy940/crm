@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use \DateTimeInterface;
-use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +12,6 @@ class OldestItem extends Model
 {
     use SoftDeletes;
     use MultiTenantModelTrait;
-    use Auditable;
     use HasFactory;
 
     public $table = 'oldest_items';

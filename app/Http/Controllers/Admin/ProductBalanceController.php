@@ -11,68 +11,16 @@ use App\Models\ProductsList;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductBalanceController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('product_balance_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ProductBalance::with(['names', 'team', 'balance_optimal', 'balance_min'])->select(sprintf('%s.*', (new ProductBalance())->table));
-            $table = Datatables::of($query);
+        $productBalances = ProductBalance::with(['names', 'team', 'balance_optimal', 'balance_min'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'product_balance_show';
-                $editGate = 'product_balance_edit';
-                $deleteGate = 'product_balance_delete';
-                $crudRoutePart = 'product-balances';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('name', function ($row) {
-                $labels = [];
-                foreach ($row->names as $name) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $name->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
-            });
-            $table->addColumn('balance_optimal_balance_optimal', function ($row) {
-                return $row->balance_optimal ? $row->balance_optimal->balance_optimal : '';
-            });
-
-            $table->addColumn('balance_min_balance_min', function ($row) {
-                return $row->balance_min ? $row->balance_min->balance_min : '';
-            });
-
-            $table->editColumn('balance_max', function ($row) {
-                return $row->balance_max ? $row->balance_max : '';
-            });
-            $table->editColumn('balance_reserved', function ($row) {
-                return $row->balance_reserved ? $row->balance_reserved : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'name', 'balance_optimal', 'balance_min']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.productBalances.index');
+        return view('admin.productBalances.index', compact('productBalances'));
     }
 
     public function create()

@@ -18,9 +18,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('warehouse_from'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('warehouse_from') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('warehouse_from') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.warehouse_from_helper') }}</span>
             </div>
@@ -32,9 +30,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('warehouse_to'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('warehouse_to') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('warehouse_to') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.warehouse_to_helper') }}</span>
             </div>
@@ -46,9 +42,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('int_lot'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('int_lot') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('int_lot') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.int_lot_helper') }}</span>
             </div>

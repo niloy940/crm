@@ -904,6 +904,110 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 224,
+                'title' => 'expense_management_access',
+            ],
+            [
+                'id'    => 225,
+                'title' => 'expense_category_create',
+            ],
+            [
+                'id'    => 226,
+                'title' => 'expense_category_edit',
+            ],
+            [
+                'id'    => 227,
+                'title' => 'expense_category_show',
+            ],
+            [
+                'id'    => 228,
+                'title' => 'expense_category_delete',
+            ],
+            [
+                'id'    => 229,
+                'title' => 'expense_category_access',
+            ],
+            [
+                'id'    => 230,
+                'title' => 'income_category_create',
+            ],
+            [
+                'id'    => 231,
+                'title' => 'income_category_edit',
+            ],
+            [
+                'id'    => 232,
+                'title' => 'income_category_show',
+            ],
+            [
+                'id'    => 233,
+                'title' => 'income_category_delete',
+            ],
+            [
+                'id'    => 234,
+                'title' => 'income_category_access',
+            ],
+            [
+                'id'    => 235,
+                'title' => 'expense_create',
+            ],
+            [
+                'id'    => 236,
+                'title' => 'expense_edit',
+            ],
+            [
+                'id'    => 237,
+                'title' => 'expense_show',
+            ],
+            [
+                'id'    => 238,
+                'title' => 'expense_delete',
+            ],
+            [
+                'id'    => 239,
+                'title' => 'expense_access',
+            ],
+            [
+                'id'    => 240,
+                'title' => 'income_create',
+            ],
+            [
+                'id'    => 241,
+                'title' => 'income_edit',
+            ],
+            [
+                'id'    => 242,
+                'title' => 'income_show',
+            ],
+            [
+                'id'    => 243,
+                'title' => 'income_delete',
+            ],
+            [
+                'id'    => 244,
+                'title' => 'income_access',
+            ],
+            [
+                'id'    => 245,
+                'title' => 'expense_report_create',
+            ],
+            [
+                'id'    => 246,
+                'title' => 'expense_report_edit',
+            ],
+            [
+                'id'    => 247,
+                'title' => 'expense_report_show',
+            ],
+            [
+                'id'    => 248,
+                'title' => 'expense_report_delete',
+            ],
+            [
+                'id'    => 249,
+                'title' => 'expense_report_access',
+            ],
+            [
+                'id'    => 250,
                 'title' => 'profile_password_edit',
             ],
         ];

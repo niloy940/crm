@@ -17,9 +17,7 @@
                     @endforeach
                 </select>
                 @if($errors->has('client'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('client') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('client') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionOrder.fields.client_helper') }}</span>
             </div>
@@ -27,9 +25,7 @@
                 <label class="required" for="due_date">{{ trans('cruds.productionOrder.fields.due_date') }}</label>
                 <input class="form-control date {{ $errors->has('due_date') ? 'is-invalid' : '' }}" type="text" name="due_date" id="due_date" value="{{ old('due_date') }}" required>
                 @if($errors->has('due_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('due_date') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('due_date') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionOrder.fields.due_date_helper') }}</span>
             </div>
@@ -37,9 +33,7 @@
                 <label class="required" for="recommended">{{ trans('cruds.productionOrder.fields.recommended') }}</label>
                 <input class="form-control date {{ $errors->has('recommended') ? 'is-invalid' : '' }}" type="text" name="recommended" id="recommended" value="{{ old('recommended') }}" required>
                 @if($errors->has('recommended'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('recommended') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('recommended') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionOrder.fields.recommended_helper') }}</span>
             </div>
@@ -47,9 +41,7 @@
                 <label class="required" for="description">{{ trans('cruds.productionOrder.fields.description') }}</label>
                 <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description" required>{{ old('description') }}</textarea>
                 @if($errors->has('description'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('description') }}
-                    </div>
+                    <span class="text-danger">{{ $errors->first('description') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.productionOrder.fields.description_helper') }}</span>
             </div>

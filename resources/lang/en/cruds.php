@@ -1190,6 +1190,7 @@ return [
             'income'            => 'Income',
             'expense'           => 'Expense',
             'profit'            => 'Profit',
+            'day'               => 'Day'
         ],
     ],
 ];

@@ -62,7 +62,7 @@
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>{{ trans('cruds.expenseReport.reports.incomeByCategory') }}</th>
-                        <th>Day</th>
+                        <th>{{ trans('cruds.expenseReport.reports.day') }}</th>
                         <th>{{ number_format($incomesTotal, 2) }}</th>
                     </tr>
                     @foreach($incomesSummary as $inc)
@@ -78,7 +78,7 @@
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>{{ trans('cruds.expenseReport.reports.expenseByCategory') }}</th>
-                        <th>Day</th>
+                        <th>{{ trans('cruds.expenseReport.reports.day') }}</th>
                         <th>{{ number_format($expensesTotal, 2) }}</th>
                     </tr>
                     @foreach($expensesSummary as $inc)

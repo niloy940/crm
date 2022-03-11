@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4" style="min-height: 917px;">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+    <a href="#" class="brand-link text-center">
         <span class="brand-text font-weight-light">{{ trans('panel.site_title') }}</span>
     </a>
 

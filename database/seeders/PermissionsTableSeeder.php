@@ -1008,6 +1008,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 250,
+                'title' => 'warehouse_sector_create',
+            ],
+            [
+                'id'    => 251,
+                'title' => 'warehouse_sector_edit',
+            ],
+            [
+                'id'    => 252,
+                'title' => 'warehouse_sector_show',
+            ],
+            [
+                'id'    => 253,
+                'title' => 'warehouse_sector_delete',
+            ],
+            [
+                'id'    => 254,
+                'title' => 'warehouse_sector_access',
+            ],
+            [
+                'id'    => 255,
                 'title' => 'profile_password_edit',
             ],
         ];

@@ -82,6 +82,26 @@
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.warehouse_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="sector_id">{{ trans('cruds.receiptNote.fields.sector') }}</label>
+                <select class="form-control select2 {{ $errors->has('sector') ? 'is-invalid' : '' }}" name="sector_id" id="sector_id" required>
+                    @foreach($sectors as $id => $entry)
+                        <option value="{{ $id }}" {{ old('sector_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('sector'))
+                    <span class="text-danger">{{ $errors->first('sector') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.receiptNote.fields.sector_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="shelf">{{ trans('cruds.receiptNote.fields.shelf') }}</label>
+                <input class="form-control {{ $errors->has('shelf') ? 'is-invalid' : '' }}" type="text" name="shelf" id="shelf" value="{{ old('shelf', '') }}">
+                @if($errors->has('shelf'))
+                    <span class="text-danger">{{ $errors->first('shelf') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.receiptNote.fields.shelf_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required">{{ trans('cruds.receiptNote.fields.qc') }}</label>
                 <select class="form-control {{ $errors->has('qc') ? 'is-invalid' : '' }}" name="qc" id="qc" required>
                     <option value disabled {{ old('qc', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>

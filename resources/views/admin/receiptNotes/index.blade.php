@@ -49,6 +49,12 @@
                         {{ trans('cruds.receiptNote.fields.warehouse') }}
                     </th>
                     <th>
+                        {{ trans('cruds.receiptNote.fields.sector') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.receiptNote.fields.shelf') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.receiptNote.fields.shift') }}
                     </th>
                     <th>
@@ -96,6 +102,17 @@
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($warehouse_sectors as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <select class="search" strict="true">
@@ -179,6 +196,8 @@
 { data: 'quantity', name: 'quantity' },
 { data: 'int_lot', name: 'int_lot' },
 { data: 'warehouse_name', name: 'warehouse.name' },
+{ data: 'sector_name', name: 'sector.name' },
+{ data: 'shelf', name: 'shelf' },
 { data: 'shift', name: 'shift' },
 { data: 'date', name: 'date' },
 { data: 'print', name: 'print' },

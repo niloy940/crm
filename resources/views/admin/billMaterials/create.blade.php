@@ -62,6 +62,14 @@
                 <span class="help-block">{{ trans('cruds.billMaterial.fields.quantity_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="other_expenses">{{ trans('cruds.billMaterial.fields.other_expenses') }}</label>
+                <input class="form-control {{ $errors->has('other_expenses') ? 'is-invalid' : '' }}" type="number" name="other_expenses" id="other_expenses" value="{{ old('other_expenses', '') }}" step="0.01" required>
+                @if($errors->has('other_expenses'))
+                    <span class="text-danger">{{ $errors->first('other_expenses') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.billMaterial.fields.other_expenses_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="coefficient">{{ trans('cruds.billMaterial.fields.coefficient') }}</label>
                 <input class="form-control {{ $errors->has('coefficient') ? 'is-invalid' : '' }}" type="number" name="coefficient" id="coefficient" value="{{ old('coefficient', '') }}" step="0.001" required>
                 @if($errors->has('coefficient'))

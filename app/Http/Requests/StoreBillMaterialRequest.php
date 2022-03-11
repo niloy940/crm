@@ -41,6 +41,10 @@ class StoreBillMaterialRequest extends FormRequest
                 'numeric',
                 'required',
             ],
+            'other_expenses' => [
+                'numeric',
+                'required',
+            ],
             'coefficient' => [
                 'numeric',
                 'required',

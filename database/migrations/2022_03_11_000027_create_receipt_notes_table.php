@@ -14,6 +14,7 @@ class CreateReceiptNotesTable extends Migration
             $table->string('lot')->unique();
             $table->string('int_lot')->unique();
             $table->date('expiry_date');
+            $table->string('shelf')->nullable();
             $table->string('qc');
             $table->string('conditions');
             $table->string('shift');

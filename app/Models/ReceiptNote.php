@@ -61,6 +61,8 @@ class ReceiptNote extends Model
         'int_lot',
         'expiry_date',
         'warehouse_id',
+        'sector_id',
+        'shelf',
         'qc',
         'conditions',
         'shift',
@@ -99,6 +101,11 @@ class ReceiptNote extends Model
     public function warehouse()
     {
         return $this->belongsTo(WarehousesList::class, 'warehouse_id');
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(WarehouseSector::class, 'sector_id');
     }
 
     public function getDateAttribute($value)

@@ -13,6 +13,7 @@ class CreateBillMaterialsTable extends Migration
             $table->string('name')->unique();
             $table->float('price', 8, 3);
             $table->float('quantity', 8, 3);
+            $table->float('other_expenses', 7, 2);
             $table->float('coefficient', 5, 3);
             $table->float('total', 7, 3)->nullable();
             $table->timestamps();

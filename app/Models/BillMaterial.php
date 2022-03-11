@@ -29,6 +29,7 @@ class BillMaterial extends Model
         'for_product_id',
         'price',
         'quantity',
+        'other_expenses',
         'coefficient',
         'total',
         'created_at',

@@ -75,6 +75,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.receiptNote.fields.sector') }}
+                        </th>
+                        <td>
+                            {{ $receiptNote->sector->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.receiptNote.fields.shelf') }}
+                        </th>
+                        <td>
+                            {{ $receiptNote->shelf }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.receiptNote.fields.qc') }}
                         </th>
                         <td>

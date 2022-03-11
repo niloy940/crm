@@ -50,6 +50,14 @@ class UpdateReceiptNoteRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'sector_id' => [
+                'required',
+                'integer',
+            ],
+            'shelf' => [
+                'string',
+                'nullable',
+            ],
             'qc' => [
                 'required',
             ],

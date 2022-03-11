@@ -164,7 +164,7 @@
                     </li>
                 @endcan
                 @can('warehouse_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/receipt-notes*") ? "menu-open" : "" }} {{ request()->is("admin/delivery-notes*") ? "menu-open" : "" }} {{ request()->is("admin/warehouse-transfers*") ? "menu-open" : "" }} {{ request()->is("admin/packing-lists*") ? "menu-open" : "" }} {{ request()->is("admin/warehouses-lists*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/receipt-notes*") ? "menu-open" : "" }} {{ request()->is("admin/delivery-notes*") ? "menu-open" : "" }} {{ request()->is("admin/warehouse-transfers*") ? "menu-open" : "" }} {{ request()->is("admin/packing-lists*") ? "menu-open" : "" }} {{ request()->is("admin/warehouses-lists*") ? "menu-open" : "" }} {{ request()->is("admin/warehouse-sectors*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-warehouse">
 
@@ -231,6 +231,18 @@
                                         </i>
                                         <p>
                                             {{ trans('cruds.warehousesList.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('warehouse_sector_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.warehouse-sectors.index") }}" class="nav-link {{ request()->is("admin/warehouse-sectors") || request()->is("admin/warehouse-sectors/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-puzzle-piece">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.warehouseSector.title') }}
                                         </p>
                                     </a>
                                 </li>
@@ -541,7 +553,7 @@
                 @can('asset_management_access')
                     <li class="nav-item has-treeview {{ request()->is("admin/asset-locations*") ? "menu-open" : "" }} {{ request()->is("admin/asset-categories*") ? "menu-open" : "" }} {{ request()->is("admin/asset-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/assets*") ? "menu-open" : "" }} {{ request()->is("admin/assets-histories*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="fa-fw nav-icon fas fa-wrench">
+                            <i class="fa-fw nav-icon fas fa-book">
 
                             </i>
                             <p>

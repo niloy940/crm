@@ -41,6 +41,9 @@
                             {{ trans('cruds.billMaterial.fields.quantity') }}
                         </th>
                         <th>
+                            {{ trans('cruds.billMaterial.fields.other_expenses') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.billMaterial.fields.coefficient') }}
                         </th>
                         <th>
@@ -76,6 +79,9 @@
                             </td>
                             <td>
                                 {{ $billMaterial->quantity ?? '' }}
+                            </td>
+                            <td>
+                                {{ $billMaterial->other_expenses ?? '' }}
                             </td>
                             <td>
                                 {{ $billMaterial->coefficient ?? '' }}
@@ -162,7 +168,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-
+  
 })
 
 </script>

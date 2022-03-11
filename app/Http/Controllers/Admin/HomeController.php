@@ -46,11 +46,12 @@ class HomeController
             'model'              => 'App\Models\Task',
             'group_by_field'     => 'name',
             'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
+            'filter_field'       => 'due_date',
             'filter_days'        => '30',
-            'column_class'       => 'col-md-6',
+            'column_class'       => 'col-md-12',
             'entries_number'     => '5',
             'translation_key'    => 'task',
+            'show_blank_data'    => 'false',
         ];
 
         $chart2 = new LaravelChart($settings2);

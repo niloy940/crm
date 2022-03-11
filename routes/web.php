@@ -257,6 +257,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('expense-reports/destroy', 'ExpenseReportController@massDestroy')->name('expense-reports.massDestroy');
     Route::resource('expense-reports', 'ExpenseReportController');
 
+    // Warehouse Sector
+    Route::delete('warehouse-sectors/destroy', 'WarehouseSectorController@massDestroy')->name('warehouse-sectors.massDestroy');
+    Route::resource('warehouse-sectors', 'WarehouseSectorController');
+
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');

@@ -108,9 +108,9 @@
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                <b>Version</b> 1.0.0-alpha
+                <b>Version</b> 3.0.0-alpha
             </div>
-            <strong> MySpoon &copy;</strong> {{ trans('global.allRightsReserved') }}
+            <strong> &copy;</strong> {{ trans('global.allRightsReserved') }}
         </footer>
         <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
@@ -137,8 +137,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
-
-
         $(function() {
   let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
   let csvButtonTrans = '{{ trans('global.datatables.csv') }}'

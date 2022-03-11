@@ -67,6 +67,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.billMaterial.fields.other_expenses') }}
+                        </th>
+                        <td>
+                            {{ $billMaterial->other_expenses }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.billMaterial.fields.coefficient') }}
                         </th>
                         <td>

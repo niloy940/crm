@@ -20,8 +20,8 @@ class WarehousesListTableSeeder extends Seeder
             'name' => 'Skladiste',
             ],
             [
-                'id' => '2',
-                'name' => 'Gotovi proizvodi',
+            'id' => '2',
+            'name' => 'Gotovi proizvodi',
             ],
         ];
         WarehousesList::insert($warehouses);

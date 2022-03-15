@@ -23,7 +23,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.deliveryNote.fields.client_helper') }}</span>
             </div>
-            <div class="form-group">
+
+            {{-- <div class="form-group">
                 <label class="required" for="product_id">{{ trans('cruds.deliveryNote.fields.product') }}</label>
                 <select class="form-control select2 {{ $errors->has('product') ? 'is-invalid' : '' }}" name="product_id" id="product_id" required>
                     @foreach($products as $id => $entry)
@@ -37,6 +38,58 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.deliveryNote.fields.product_helper') }}</span>
             </div>
+            
+            <div class="form-group">
+                <label class="required" for="quantity">{{ trans('cruds.deliveryNote.fields.quantity') }}</label>
+                <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
+                @if($errors->has('quantity'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('quantity') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.deliveryNote.fields.quantity_helper') }}</span>
+            </div> --}}
+
+
+            <div class="form-group">
+                <div class="row col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>{{ trans('cruds.receiptNote.fields.product') }}</th>
+                                <th>{{ trans('cruds.receiptNote.fields.quantity') }}</th>
+                                <th><a href="#" id="addRow" class="btn btn-info">+</a></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select
+                                        class="form-control form-select {{ $errors->has('products') ? 'is-invalid' : '' }}"
+                                        name="products[]" id="products" required>
+                                        @foreach ($products as $id => $product)
+                                            <option value="{{ $id }}">
+                                                {{ $product }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="form-control {{ $errors->has('quantities') ? 'is-invalid' : '' }}" type="number"
+                                        name="quantities[]" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
+                                    @if ($errors->has('quantities'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('quantities') }}
+                                        </div>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
             <div class="form-group">
                 <label class="required" for="int_lot_id">{{ trans('cruds.deliveryNote.fields.int_lot') }}</label>
                 <select class="form-control select2 {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" name="int_lot_id" id="int_lot_id" required>
@@ -50,16 +103,6 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.deliveryNote.fields.int_lot_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="quantity">{{ trans('cruds.deliveryNote.fields.quantity') }}</label>
-                <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
-                @if($errors->has('quantity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.deliveryNote.fields.quantity_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="issuer_id">{{ trans('cruds.deliveryNote.fields.issuer') }}</label>
@@ -155,5 +198,34 @@ Dropzone.options.documentDropzone = {
          return _results
      }
 }
+
+
+// multiple product - quantity
+$('#addRow').on('click', function() {
+            addRow()
+        })
+
+        function addRow() {
+            
+            var tr = '<tr>' +
+                        '<td>' + 
+                            '<select class="form-control form-select {{ $errors->has("products") ? "is-invalid" : "" }}" name="products[]" id="products" required>' +
+                                "@foreach ($products as $id => $product)" +
+                                    '<option value="{{ $id }}">' +
+                                        "{{ $product }}" +
+                                    '</option>' +
+                                "@endforeach" +
+                            '</select>' +
+                        '</td>' +
+                        '<td><input class="form-control" type="text" name="quantities[]" id=""></td>' +
+                        '<td><a href="#" id="remove" class="btn btn-danger">-</a></td>' +
+                    '</tr>';
+            
+            $('tbody').append(tr)
+        }
+
+        $('tbody').on('click', '#remove', function() {
+            $(this).parent().parent().remove();
+        })
 </script>
 @endsection

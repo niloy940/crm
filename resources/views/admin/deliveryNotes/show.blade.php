@@ -36,7 +36,10 @@
                             {{ trans('cruds.deliveryNote.fields.product') }}
                         </th>
                         <td>
-                            {{ $deliveryNote->product->name ?? '' }}
+                            {{-- {{ $deliveryNote->product->name ?? '' }} --}}
+                            @foreach($deliveryNote->products as $key => $product)
+                                <span class="label label-info">{{ $product->name }}</span>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>

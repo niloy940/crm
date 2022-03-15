@@ -60,6 +60,11 @@ class ProductsList extends Model
         return $this->belongsToMany(ReceiptNote::class)->withPivot('quantity');
     }
 
+    public function delivery_notes()
+    {
+        return $this->belongsToMany(DeliveryNote::class)->withPivot('quantity');
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

@@ -30,7 +30,7 @@ class DeliveryNoteController extends Controller
         abort_if(Gate::denies('delivery_note_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = DeliveryNote::with(['client', 'product', 'int_lot', 'issuer', 'team'])->select(sprintf('%s.*', (new DeliveryNote())->table));
+            $query = DeliveryNote::with(['client', 'products', 'int_lot', 'issuer', 'team'])->select(sprintf('%s.*', (new DeliveryNote())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -43,12 +43,12 @@ class DeliveryNoteController extends Controller
                 $crudRoutePart = 'delivery-notes';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('id', function ($row) {
@@ -71,7 +71,14 @@ class DeliveryNoteController extends Controller
                 return $row->client ? (is_string($row->client) ? $row->client : $row->client->tax_no) : '';
             });
             $table->addColumn('product_name', function ($row) {
-                return $row->product ? $row->product->name : '';
+                // return $row->product ? $row->product->name : '';
+
+                $labels = [];
+                foreach ($row->products as $product) {
+                    $labels[] = sprintf('%s', $product->name);
+                }
+
+                return implode(' ', $labels);
             });
 
             $table->editColumn('quantity', function ($row) {
@@ -130,6 +137,10 @@ class DeliveryNoteController extends Controller
     {
         $deliveryNote = DeliveryNote::create($request->all());
 
+        for ($i=0; $i < count($request->products); $i++) {
+            $deliveryNote->products()->attach($request->products[$i], ['quantity' => $request->quantities[$i]]);
+        }
+
         foreach ($request->input('document', []) as $file) {
             $deliveryNote->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document');
         }
@@ -153,7 +164,7 @@ class DeliveryNoteController extends Controller
 
         $issuers = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $deliveryNote->load('client', 'product', 'int_lot', 'issuer', 'team');
+        $deliveryNote->load('client', 'products', 'int_lot', 'issuer', 'team');
 
         return view('admin.deliveryNotes.edit', compact('clients', 'deliveryNote', 'int_lots', 'issuers', 'products'));
     }
@@ -183,7 +194,7 @@ class DeliveryNoteController extends Controller
     {
         abort_if(Gate::denies('delivery_note_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $deliveryNote->load('client', 'product', 'int_lot', 'issuer', 'team');
+        $deliveryNote->load('client', 'products', 'int_lot', 'issuer', 'team');
 
         return view('admin.deliveryNotes.show', compact('deliveryNote'));
     }

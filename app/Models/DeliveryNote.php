@@ -55,9 +55,14 @@ class DeliveryNote extends Model implements HasMedia
         return $this->belongsTo(CrmCustomer::class, 'client_id');
     }
 
-    public function product()
+    // public function product()
+    // {
+    //     return $this->belongsTo(ProductsList::class, 'product_id');
+    // }
+
+    public function products()
     {
-        return $this->belongsTo(ProductsList::class, 'product_id');
+        return $this->belongsToMany(ProductsList::class)->withPivot('quantity');
     }
 
     public function int_lot()

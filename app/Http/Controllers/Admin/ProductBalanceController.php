@@ -57,8 +57,8 @@ class ProductBalanceController extends Controller
                 $labels = [];
                 
                 foreach ($row->names as $product) {
-                    $total_delivery_quantity = DB::table('delivery_notes')
-                        ->where('product_id', 1)->first()->quantity;
+                    $total_delivery_quantity = DB::table('delivery_note_products_list')
+                        ->where('products_list_id', $product->id)->sum('quantity');
 
                     $total_receipt_quantities = DB::table('products_list_receipt_note')
                         ->where('products_list_id', $product->id)->sum('quantity');

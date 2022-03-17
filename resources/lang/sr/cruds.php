@@ -643,7 +643,7 @@ return [
             'sector_helper'       => ' ',
             'shelf'               => 'Polica',
             'shelf_helper'        => ' ',
-            'issuer'              => 'Izdao',
+            'issuer'              => 'Primio',
             'issuer_helper'       => ''
         ],
     ],

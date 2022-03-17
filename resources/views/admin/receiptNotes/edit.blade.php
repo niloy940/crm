@@ -169,11 +169,13 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.registration_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="visibility: hidden;">
                 <label class="required" for="issuer_id">{{ trans('cruds.receiptNote.fields.issuer') }}</label>
                 <select class="form-control select2 {{ $errors->has('issuer') ? 'is-invalid' : '' }}" name="issuer_id" id="issuer_id" required>
                     @foreach($issuers as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('issuer_id') ? old('issuer_id') : $receiptNote->issuer->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @if(Auth::id() == $id)
+                            <option value="{{ $id }}" {{ old('issuer_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @endif
                     @endforeach
                 </select>
                 @if($errors->has('issuer'))

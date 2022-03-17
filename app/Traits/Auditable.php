@@ -10,17 +10,17 @@ trait Auditable
     public static function bootAuditable()
     {
         static::created(function (Model $model) {
-            self::audit('audit:created', $model);
+            self::audit('Kreirano', $model);
         });
 
         static::updated(function (Model $model) {
             $model->attributes = array_merge($model->getChanges(), ['id' => $model->id]);
 
-            self::audit('audit:updated', $model);
+            self::audit('Izmenjeno', $model);
         });
 
         static::deleted(function (Model $model) {
-            self::audit('audit:deleted', $model);
+            self::audit('Obrisano', $model);
         });
     }
 

@@ -10,6 +10,7 @@ use App\Models\CrmCustomer;
 use App\Models\ProductsList;
 use App\Models\ReceiptNote;
 use App\Models\Team;
+use App\Models\User;
 use App\Models\WarehouseSector;
 use App\Models\WarehousesList;
 use Gate;
@@ -24,7 +25,7 @@ class ReceiptNoteController extends Controller
         abort_if(Gate::denies('receipt_note_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ReceiptNote::with(['client', 'products', 'warehouse', 'sector', 'team'])->select(sprintf('%s.*', (new ReceiptNote())->table));
+            $query = ReceiptNote::with(['client', 'products', 'warehouse', 'sector', 'issuer', 'team'])->select(sprintf('%s.*', (new ReceiptNote())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -37,12 +38,12 @@ class ReceiptNoteController extends Controller
                 $crudRoutePart = 'receipt-notes';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('id', function ($row) {
@@ -88,8 +89,11 @@ class ReceiptNoteController extends Controller
             $table->editColumn('print', function ($row) {
                 return $row->print ? ReceiptNote::PRINT_SELECT[$row->print] : '';
             });
+            $table->addColumn('issuer_name', function ($row) {
+                return $row->issuer ? $row->issuer->name : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'client', 'warehouse', 'sector']);
+            $table->rawColumns(['actions', 'placeholder', 'client', 'warehouse', 'sector', 'issuer']);
 
             return $table->make(true);
         }
@@ -98,9 +102,10 @@ class ReceiptNoteController extends Controller
         $products_lists    = ProductsList::get();
         $warehouses_lists  = WarehousesList::get();
         $warehouse_sectors = WarehouseSector::get();
+        $users             = User::get();
         $teams             = Team::get();
 
-        return view('admin.receiptNotes.index', compact('crm_customers', 'products_lists', 'warehouses_lists', 'warehouse_sectors', 'teams'));
+        return view('admin.receiptNotes.index', compact('crm_customers', 'products_lists', 'warehouses_lists', 'warehouse_sectors', 'users', 'teams'));
     }
 
     public function create()
@@ -115,7 +120,9 @@ class ReceiptNoteController extends Controller
 
         $sectors = WarehouseSector::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.receiptNotes.create', compact('clients', 'products', 'sectors', 'warehouses'));
+        $issuers = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.receiptNotes.create', compact('clients', 'issuers', 'products', 'sectors', 'warehouses'));
     }
 
     public function store(StoreReceiptNoteRequest $request)
@@ -136,9 +143,11 @@ class ReceiptNoteController extends Controller
 
         $sectors = WarehouseSector::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $receiptNote->load('client', 'products', 'warehouse', 'sector', 'team');
+        $issuers = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.receiptNotes.edit', compact('products', 'receiptNote', 'sectors', 'warehouses'));
+        $receiptNote->load('client', 'products', 'warehouse', 'sector', 'issuer', 'team');
+
+        return view('admin.receiptNotes.edit', compact('issuers', 'products', 'receiptNote', 'sectors', 'warehouses'));
     }
 
     public function update(UpdateReceiptNoteRequest $request, ReceiptNote $receiptNote)
@@ -153,7 +162,7 @@ class ReceiptNoteController extends Controller
     {
         abort_if(Gate::denies('receipt_note_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $receiptNote->load('client', 'products', 'warehouse', 'sector', 'team');
+        $receiptNote->load('client', 'products', 'warehouse', 'sector', 'issuer', 'team');
 
         return view('admin.receiptNotes.show', compact('receiptNote'));
     }

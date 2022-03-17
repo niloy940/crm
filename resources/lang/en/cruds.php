@@ -643,6 +643,8 @@ return [
             'sector_helper'       => ' ',
             'shelf'               => 'Shelf',
             'shelf_helper'        => ' ',
+            'issuer'              => 'Issuer',
+            'issuer_helper'       => ''
         ],
     ],
     'deliveryNote' => [

@@ -15,6 +15,8 @@ class AddRelationshipFieldsToReceiptNotesTable extends Migration
             $table->foreign('warehouse_id', 'warehouse_fk_6050832')->references('id')->on('warehouses_lists');
             $table->unsignedBigInteger('sector_id')->nullable();
             $table->foreign('sector_id', 'sector_fk_6184040')->references('id')->on('warehouse_sectors');
+            $table->unsignedBigInteger('issuer_id')->nullable();
+            $table->foreign('issuer_id', 'issuer_fk_6224932')->references('id')->on('users');
             $table->unsignedBigInteger('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_6051569')->references('id')->on('teams');
         });

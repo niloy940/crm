@@ -155,6 +155,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.receiptNote.fields.issuer') }}
+                        </th>
+                        <td>
+                            {{ $receiptNote->issuer->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.receiptNote.fields.print') }}
                         </th>
                         <td>

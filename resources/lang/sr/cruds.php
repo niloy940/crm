@@ -599,7 +599,7 @@ return [
         'fields'         => [
             'id'                  => 'ID',
             'id_helper'           => ' ',
-            'product'             => 'Naziv',
+            'product'             => 'Proizvod',
             'product_helper'      => ' ',
             'quantity'            => 'Kolicina',
             'quantity_helper'     => ' ',
@@ -643,6 +643,8 @@ return [
             'sector_helper'       => ' ',
             'shelf'               => 'Polica',
             'shelf_helper'        => ' ',
+            'issuer'              => 'Izdao',
+            'issuer_helper'       => ''
         ],
     ],
     'deliveryNote' => [

@@ -181,6 +181,18 @@
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.registration_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="issuer_id">{{ trans('cruds.receiptNote.fields.issuer') }}</label>
+                <select class="form-control select2 {{ $errors->has('issuer') ? 'is-invalid' : '' }}" name="issuer_id" id="issuer_id" required>
+                    @foreach($issuers as $id => $entry)
+                        <option value="{{ $id }}" {{ old('issuer_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('issuer'))
+                    <span class="text-danger">{{ $errors->first('issuer') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.receiptNote.fields.issuer_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

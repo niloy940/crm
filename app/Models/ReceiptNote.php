@@ -73,6 +73,7 @@ class ReceiptNote extends Model
         'registration',
         'created_at',
         'print',
+        'issuer_id',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -116,6 +117,11 @@ class ReceiptNote extends Model
     public function setDateAttribute($value)
     {
         $this->attributes['date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function issuer()
+    {
+        return $this->belongsTo(User::class, 'issuer_id');
     }
 
     public function team()

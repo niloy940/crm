@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'quickLinks' => [
+        'title' => 'Quick links',
+    ],
     'userManagement' => [
         'title'          => 'User management',
         'title_singular' => 'User management',

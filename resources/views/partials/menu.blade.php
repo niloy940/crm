@@ -25,6 +25,106 @@
                         </p>
                     </a>
                 </li>
+                @can('task_management_access')
+                    <li class="nav-item has-treeview {{ request()->is("admin/users*") ? "menu-open" : "" }} {{ request()->is("admin/roles*") ? "menu-open" : "" }} {{ request()->is("admin/permissions*") ? "menu-open" : "" }} {{ request()->is("admin/teams*") ? "menu-open" : "" }} {{ request()->is("admin/audit-logs*") ? "menu-open" : "" }}">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="fa-fw nav-icon fas fa-external-link-alt">
+
+                            </i>
+                            <p>
+                                {{ trans('cruds.quickLinks.title') }}
+                                <i class="right fa fa-fw fa-angle-left nav-icon"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('product_balance_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.product-balances.index") }}" class="nav-link {{ request()->is("admin/product-balances") || request()->is("admin/product-balances/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-balance-scale">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.productBalance.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                                @can('production_order_access')
+                                    <li class="nav-item">
+                                        <a href="{{ route("admin.production-orders.index") }}" class="nav-link {{ request()->is("admin/production-orders") || request()->is("admin/production-orders/*") ? "active" : "" }}">
+                                            <i class="fa-fw nav-icon fas fa-clipboard-list">
+
+                                            </i>
+                                            <p>
+                                                {{ trans('cruds.productionOrder.title') }}
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('task_access')
+                                    <li class="nav-item">
+                                        <a href="{{ route("admin.tasks.index") }}" class="nav-link {{ request()->is("admin/tasks") || request()->is("admin/tasks/*") ? "active" : "" }}">
+                                            <i class="fa-fw nav-icon fas fa-briefcase">
+
+                                            </i>
+                                            <p>
+                                                {{ trans('cruds.task.title') }}
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('tasks_calendar_access')
+                                    <li class="nav-item">
+                                        <a href="{{ route("admin.tasks-calendars.index") }}" class="nav-link {{ request()->is("admin/tasks-calendars") || request()->is("admin/tasks-calendars/*") ? "active" : "" }}">
+                                            <i class="fa-fw nav-icon fas fa-calendar">
+
+                                            </i>
+                                            <p>
+                                                {{ trans('cruds.tasksCalendar.title') }}
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('pdf_invoice_access')
+                                    <li class="nav-item">
+                                        <a href="{{ route("admin.pdf-invoices.index") }}" class="nav-link {{ request()->is("admin/pdf-invoices") || request()->is("admin/pdf-invoices/*") ? "active" : "" }}">
+                                            <i class="fa-fw nav-icon fas fa-file-invoice">
+
+                                            </i>
+                                            <p>
+                                                {{ trans('cruds.pdfInvoice.title') }}
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('user_alert_access')
+                                    <li class="nav-item">
+                                        <a href="{{ route("admin.user-alerts.index") }}" class="nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "active" : "" }}">
+                                            <i class="fa-fw nav-icon fas fa-bell">
+
+                                            </i>
+                                            <p>
+                                                {{ trans('cruds.userAlert.title') }}
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @php($unread = \App\Models\QaTopic::unreadCount())
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }} nav-link">
+                                        <i class="fa-fw fa fa-envelope nav-icon">
+
+                                        </i>
+                                        <p>{{ trans('global.messages') }}</p>
+                                        @if($unread > 0)
+                                            <strong>( {{ $unread }} )</strong>
+                                        @endif
+
+                                    </a>
+                                </li>
+
+                        </ul>
+                @endcan
                 @can('user_management_access')
                     <li class="nav-item has-treeview {{ request()->is("admin/users*") ? "menu-open" : "" }} {{ request()->is("admin/roles*") ? "menu-open" : "" }} {{ request()->is("admin/permissions*") ? "menu-open" : "" }} {{ request()->is("admin/teams*") ? "menu-open" : "" }} {{ request()->is("admin/audit-logs*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">

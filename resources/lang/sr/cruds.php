@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'quickLinks' => [
+        'title' => 'Brzi pristup',
+    ],
     'userManagement' => [
         'title'          => 'Upravljanje korisnicima',
         'title_singular' => 'Upravljanje korisnicima',

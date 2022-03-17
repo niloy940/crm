@@ -85,6 +85,21 @@
                                         </a>
                                     </li>
                                 @endcan
+                                @can('lot_tracking_access')
+                                    @can('lot_track_access')
+                                        <li class="nav-item">
+                                            <a href="{{ route("admin.lot-tracks.index") }}" class="nav-link {{ request()->is("admin/lot-tracks") || request()->is("admin/lot-tracks/*") ? "active" : "" }}">
+                                                <i class="fa-fw nav-icon fas fa-barcode">
+
+                                                </i>
+                                                <p>
+                                                    {{ trans('cruds.lotTrack.title') }}
+                                                </p>
+                                            </a>
+                                        </li>
+                                        @endcan
+                                        </li>
+                                    @endcan
                                 @can('pdf_invoice_access')
                                     <li class="nav-item">
                                         <a href="{{ route("admin.pdf-invoices.index") }}" class="nav-link {{ request()->is("admin/pdf-invoices") || request()->is("admin/pdf-invoices/*") ? "active" : "" }}">
@@ -111,7 +126,7 @@
                                 @endcan
                                 @php($unread = \App\Models\QaTopic::unreadCount())
                                 <li class="nav-item">
-                                    <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }} nav-link">
+                                    <a href="{{ route("admin.messenger.showInbox") }}" class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }} nav-link">
                                         <i class="fa-fw fa fa-envelope nav-icon">
 
                                         </i>
@@ -903,18 +918,18 @@
                     </li>
                 @endcan
                 @php($unread = \App\Models\QaTopic::unreadCount())
-                    <li class="nav-item">
-                        <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }} nav-link">
-                            <i class="fa-fw fa fa-envelope nav-icon">
+                <li class="nav-item">
+                    <a href="{{ route('admin.messenger.showInbox') }}" class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }} nav-link">
+                        <i class="fa-fw fa fa-envelope nav-icon">
 
-                            </i>
-                            <p>{{ trans('global.messages') }}</p>
-                            @if($unread > 0)
-                                <strong>( {{ $unread }} )</strong>
-                            @endif
+                        </i>
+                        <p>{{ trans('global.messages') }}</p>
+                        @if($unread > 0)
+                            <strong>( {{ $unread }} )</strong>
+                        @endif
 
-                        </a>
-                    </li>
+                    </a>
+                </li>
                     @if(\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
                         <li class="nav-item">
                             <a class="{{ request()->is("admin/team-members") || request()->is("admin/team-members/*") ? "active" : "" }} nav-link" href="{{ route("admin.team-members.index") }}">

@@ -46,13 +46,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($productBalances as $key => $productBalance)
+                    {{-- @foreach($productBalances as $key => $productBalance)
                         <tr data-entry-id="{{ $productBalance->id }}">
                             <td>
 
                             </td>
                             <td>
-                                @foreach($productBalance->names as $key => $item)
+                                @foreach($productBalance->productLists as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
                             </td>
@@ -95,7 +95,57 @@
                             </td>
 
                         </tr>
+                    @endforeach --}}
+
+                    @foreach($products as $key => $product)
+                        <tr data-entry-id="{{ $product->id }}" class="trow">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $product->name }}
+                            </td>
+                            <td class="quantity">
+                                {{ $product->quantity ?? '' }}
+                            </td>
+                            <td class="balance_optimal">
+                                {{ $product->balance_optimal ?? '' }}
+                            </td>
+                            <td class="balance_min">
+                                {{ $product->balance_min ?? '' }}
+                            </td>
+                            <td>
+                                {{ $product->balance_max ?? '' }}
+                            </td>
+                            <td>
+                                {{ $product->balance_reserved ?? '' }}
+                            </td>
+                            <td>
+                                @can('product_balance_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.products-lists.show', $product->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('product_balance_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.products-lists.edit', $product->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('product_balance_delete')
+                                    <form action="{{ route('admin.products-lists.destroy', $product->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
                     @endforeach
+
                 </tbody>
             </table>
         </div>
@@ -142,16 +192,44 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 4, 'asc' ]],
+    order: [[ 4, 'desc' ]],
     pageLength: 25,
   });
+
   let table = $('.datatable-ProductBalance:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+})
+
+
+$(".trow").each(function() {
+    var quantity = Number($(this).find(".quantity").html());
+    var balance_optimal = Number($(this).find(".balance_optimal").html());
+    var balance_min = Number($(this).find(".balance_min").html());
+
+    if (quantity < balance_optimal) {
+        $(this).addClass("warning")
+    }
+
+    if (quantity < balance_min) {
+        $(this).addClass("danger")
+    }
 })
 
 </script>
 @endsection
+
+ <style type="text/css">
+    .warning {
+        background-color: yellowgreen !important;
+        color: #fff;
+    }
+
+    .danger {
+        background-color: red !important;
+        color: #fff;
+    }
+ 
+ </style>

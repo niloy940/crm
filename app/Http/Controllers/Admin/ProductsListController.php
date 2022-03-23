@@ -21,7 +21,7 @@ class ProductsListController extends Controller
     {
         abort_if(Gate::denies('products_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productsLists = ProductsList::with(['warehouse', 'int_lots', 'team'])->get();
+        $productsLists = ProductsList::with(['warehouse', 'receiptNotes', 'team'])->get();
 
         return view('admin.productsLists.index', compact('productsLists'));
     }
@@ -48,7 +48,7 @@ class ProductsListController extends Controller
 
         $warehouses = WarehousesList::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $productsList->load('warehouse', 'int_lots', 'team');
+        $productsList->load('warehouse', 'receiptNotes', 'team');
 
         return view('admin.productsLists.edit', compact('productsList', 'warehouses'));
     }
@@ -64,7 +64,7 @@ class ProductsListController extends Controller
     {
         abort_if(Gate::denies('products_list_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productsList->load('warehouse', 'int_lots', 'team');
+        $productsList->load('warehouse', 'receiptNotes', 'team');
 
         return view('admin.productsLists.show', compact('productsList'));
     }

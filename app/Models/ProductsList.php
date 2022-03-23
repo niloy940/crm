@@ -38,6 +38,7 @@ class ProductsList extends Model
 
     protected $fillable = [
         'name',
+        'quantity',
         'created_at',
         'warehouse_id',
         'price',
@@ -55,9 +56,19 @@ class ProductsList extends Model
         return $this->belongsTo(WarehousesList::class, 'warehouse_id');
     }
 
-    public function int_lots()
+    public function receiptNotes()
     {
         return $this->belongsToMany(ReceiptNote::class);
+    }
+
+    public function internalLots()
+    {
+        return $this->hasMany(InternalLot::class);
+    }
+
+    public function warehouseTransfer()
+    {
+        return $this->belongsToMany(WarehouseTransfer::class);
     }
 
     public function team()

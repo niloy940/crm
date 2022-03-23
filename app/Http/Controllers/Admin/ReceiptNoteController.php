@@ -7,6 +7,8 @@ use App\Http\Requests\MassDestroyReceiptNoteRequest;
 use App\Http\Requests\StoreReceiptNoteRequest;
 use App\Http\Requests\UpdateReceiptNoteRequest;
 use App\Models\CrmCustomer;
+use App\Models\InternalLot;
+use App\Models\ProductBalance;
 use App\Models\ProductsList;
 use App\Models\ReceiptNote;
 use App\Models\Team;
@@ -15,6 +17,7 @@ use App\Models\WarehouseSector;
 use App\Models\WarehousesList;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -122,13 +125,37 @@ class ReceiptNoteController extends Controller
 
         $issuers = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.receiptNotes.create', compact('clients', 'issuers', 'products', 'sectors', 'warehouses'));
+        $int_lot = uniqid().date('Ymd');
+
+        return view('admin.receiptNotes.create', compact('clients', 'issuers', 'products', 'sectors', 'warehouses', 'int_lot'));
     }
 
     public function store(StoreReceiptNoteRequest $request)
     {
         $receiptNote = ReceiptNote::create($request->all());
-        $receiptNote->products()->sync($request->input('products', []));
+
+        // $product_balance = ProductBalance::create();
+
+        // $product_balance->productLists()->sync($request->products);
+        
+        for ($i=0; $i < count($request->products); $i++) {
+            $quantity = DB::table('products_list_receipt_note')
+                        ->where('products_list_id', $request->products[$i])
+                        ->sum('quantity') + $request->quantities[$i];
+            
+            $receiptNote->products()->attach($request->products[$i], ['quantity' => $request->quantities[$i]]);
+
+            $product = ProductsList::where('id', $request->products[$i])->first();
+            $product->update(['quantity' => $quantity]);
+
+            $product->internalLots()->create(
+                [
+                    'int_lot' => $request->int_lots[$i],
+                    'quantity' => $request->quantities[$i]
+                ]
+            );
+        }
+
 
         return redirect()->route('admin.receipt-notes.index');
     }

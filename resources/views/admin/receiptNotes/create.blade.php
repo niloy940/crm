@@ -21,30 +21,55 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.client_helper') }}</span>
             </div>
+
             <div class="form-group">
-                <label class="required" for="products">{{ trans('cruds.receiptNote.fields.product') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                <div class="row col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>{{ trans('cruds.receiptNote.fields.product') }}</th>
+                                <th>{{ trans('cruds.receiptNote.fields.quantity') }}</th>
+                                <th>{{ trans('cruds.receiptNote.fields.int_lot_helper') }}</th>
+                                <th><a href="#" id="addRow" class="btn btn-info">+</a></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select
+                                        class="form-control form-select {{ $errors->has('products') ? 'is-invalid' : '' }}"
+                                        name="products[]" id="products" required>
+                                        <option value="">Select One</option>
+                                        @foreach ($products as $id => $product)
+                                            <option value="{{ $id }}">
+                                                {{ $product }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="form-control {{ $errors->has('quantities') ? 'is-invalid' : '' }}" type="number"
+                                        name="quantities[]" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
+                                    @if ($errors->has('quantities'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('quantities') }}
+                                        </div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <input class="form-control {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" type="text" name="int_lots[]" id="int_lot" required>
+                                    @if($errors->has('int_lot'))
+                                        <span class="text-danger">{{ $errors->first('int_lot') }}</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <select class="form-control select2 {{ $errors->has('products') ? 'is-invalid' : '' }}" name="products[]" id="products" multiple required>
-                    @foreach($products as $id => $product)
-                        <option value="{{ $id }}" {{ in_array($id, old('products', [])) ? 'selected' : '' }}>{{ $product }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('products'))
-                    <span class="text-danger">{{ $errors->first('products') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.receiptNote.fields.product_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="quantity">{{ trans('cruds.receiptNote.fields.quantity') }}</label>
-                <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
-                @if($errors->has('quantity'))
-                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.receiptNote.fields.quantity_helper') }}</span>
-            </div>
+
+
             <div class="form-group">
                 <label class="required" for="lot">{{ trans('cruds.receiptNote.fields.lot') }}</label>
                 <input class="form-control {{ $errors->has('lot') ? 'is-invalid' : '' }}" type="text" name="lot" id="lot" value="{{ old('lot', '') }}" required>
@@ -53,14 +78,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.receiptNote.fields.lot_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="int_lot">{{ trans('cruds.receiptNote.fields.int_lot') }}</label>
-                <input class="form-control {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" type="text" name="int_lot" id="int_lot" value="{{ old('int_lot', '') }}" required>
-                @if($errors->has('int_lot'))
-                    <span class="text-danger">{{ $errors->first('int_lot') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.receiptNote.fields.int_lot_helper') }}</span>
-            </div>
+
             <div class="form-group">
                 <label class="required" for="expiry_date">{{ trans('cruds.receiptNote.fields.expiry_date') }}</label>
                 <input class="form-control date {{ $errors->has('expiry_date') ? 'is-invalid' : '' }}" type="text" name="expiry_date" id="expiry_date" value="{{ old('expiry_date') }}" required>
@@ -202,7 +220,59 @@
         </form>
     </div>
 </div>
+@endsection
 
 
+@section('scripts')
+    <script type="text/javascript">
+        $(function() {
+            $("#int_lot").attr("value", Math.floor(Math.random() * 1000000) + uid());
+        });
 
+        $('#addRow').on('click', function() {
+            addRow();
+
+            var int_lots = document.querySelectorAll('.int_lots');
+
+            for (var i = 0; i < int_lots.length; i++) {
+                int_lots[i].value = Math.floor(Math.random() * 1000000) + uid();
+            }
+        })
+
+        function addRow() {
+            
+            var tr = '<tr>' +
+                        '<td>' + 
+                            '<select class="form-control form-select {{ $errors->has("products") ? "is-invalid" : "" }}" name="products[]" id="products" required>' +
+                                '<option value="">Select One</option>' +
+                                "@foreach ($products as $id => $product)" +
+                                    '<option value="{{ $id }}">' +
+                                        "{{ $product }}" +
+                                    '</option>' +
+                                "@endforeach" +
+                            '</select>' +
+                        '</td>' +
+                        '<td><input class="form-control" type="text" name="quantities[]" id="quantities" required></td>' +
+                        '<td><input class="form-control int_lots" type="text" name="int_lots[]" id="int_lots" required></td>' +
+                        '<td><a href="#" id="remove" class="btn btn-danger">-</a></td>' +
+                    '</tr>';
+            
+            $('tbody').append(tr)
+        }
+
+        $('tbody').on('click', '#remove', function() {
+            $(this).parent().parent().remove();
+        })
+
+        //unique
+        function uid(){
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            return today =  yyyy + mm + dd;
+        }
+
+    </script>
 @endsection

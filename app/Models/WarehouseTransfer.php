@@ -29,7 +29,7 @@ class WarehouseTransfer extends Model
         'warehouse_to_id',
         'product_id',
         'int_lot_id',
-        'quantity',
+        // 'quantity',
         'user_id',
         'user_received_id',
         'created_at',
@@ -48,14 +48,24 @@ class WarehouseTransfer extends Model
         return $this->belongsTo(WarehousesList::class, 'warehouse_to_id');
     }
 
-    public function product()
+    // public function product()
+    // {
+    //     return $this->belongsTo(ProductsList::class, 'product_id');
+    // }
+
+    // public function int_lot()
+    // {
+    //     return $this->belongsTo(ReceiptNote::class, 'int_lot_id');
+    // }
+
+    public function products()
     {
-        return $this->belongsTo(ProductsList::class, 'product_id');
+        return $this->belongsToMany(ProductsList::class);
     }
 
-    public function int_lot()
+    public function internalLots()
     {
-        return $this->belongsTo(ReceiptNote::class, 'int_lot_id');
+        return $this->belongsToMany(InternalLot::class, 'internal_lot_warehouse_transfer')->withPivot('reserved_quantity');
     }
 
     public function user()

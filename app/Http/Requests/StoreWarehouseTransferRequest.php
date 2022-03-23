@@ -25,17 +25,30 @@ class StoreWarehouseTransferRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'product_id' => [
+            // 'product_id' => [
+            //     'required',
+            //     'integer',
+            // ],
+            // 'int_lot_id' => [
+            //     'required',
+            //     'integer',
+            // ],
+            // 'quantity' => [
+            //     'numeric',
+            //     'required',
+            // ],
+
+            'products' => [
                 'required',
-                'integer',
+                'array',
             ],
-            'int_lot_id' => [
+            'int_lots' => [
                 'required',
-                'integer',
+                'array',
             ],
-            'quantity' => [
-                'numeric',
+            'quantities' => [
                 'required',
+                'array',
             ],
             'user_id' => [
                 'required',

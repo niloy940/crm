@@ -10,9 +10,9 @@ class CreateReceiptNotesTable extends Migration
     {
         Schema::create('receipt_notes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('quantity', 8, 3);
+            // $table->float('quantity', 8, 3)->nullable();
             $table->string('lot')->unique();
-            $table->string('int_lot')->unique();
+            // $table->string('int_lot')->unique();
             $table->date('expiry_date');
             $table->string('shelf')->nullable();
             $table->string('qc');

@@ -28,8 +28,12 @@ class StoreReceiptNoteRequest extends FormRequest
                 'required',
                 'array',
             ],
-            'quantity' => [
-                'numeric',
+            'quantities' => [
+                'array',
+                'required',
+            ],
+            'int_lots' => [
+                'array',
                 'required',
             ],
             'lot' => [
@@ -39,13 +43,13 @@ class StoreReceiptNoteRequest extends FormRequest
                 'required',
                 'unique:receipt_notes',
             ],
-            'int_lot' => [
-                'string',
-                'min:3',
-                'max:35',
-                'required',
-                'unique:receipt_notes',
-            ],
+            // 'int_lot' => [
+            //     'string',
+            //     'min:3',
+            //     'max:35',
+            //     'required',
+            //     'unique:receipt_notes',
+            // ],
             'expiry_date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),

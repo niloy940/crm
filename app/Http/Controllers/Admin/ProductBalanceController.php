@@ -18,9 +18,11 @@ class ProductBalanceController extends Controller
     {
         abort_if(Gate::denies('product_balance_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productBalances = ProductBalance::with(['names', 'team', 'balance_optimal', 'balance_min'])->get();
+        $productBalances = ProductBalance::with(['productLists', 'team', 'balance_optimal', 'balance_min'])->get();
 
-        return view('admin.productBalances.index', compact('productBalances'));
+        $products = ProductsList::all();
+
+        return view('admin.productBalances.index', compact(['productBalances', 'products']));
     }
 
     public function create()
@@ -49,7 +51,7 @@ class ProductBalanceController extends Controller
 
         $balance_mins = ProductsList::pluck('balance_min', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $productBalance->load('names', 'team', 'balance_optimal', 'balance_min');
+        $productBalance->load('productLists', 'team', 'balance_optimal', 'balance_min');
 
         return view('admin.productBalances.edit', compact('balance_mins', 'balance_optimals', 'productBalance'));
     }
@@ -65,7 +67,7 @@ class ProductBalanceController extends Controller
     {
         abort_if(Gate::denies('product_balance_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productBalance->load('names', 'team', 'balance_optimal', 'balance_min');
+        $productBalance->load('productLists', 'team', 'balance_optimal', 'balance_min');
 
         return view('admin.productBalances.show', compact('productBalance'));
     }

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             CrmStatusTableSeeder::class,
             TaskStatusTableSeeder::class,
             WarehousesListTableSeeder::class,
+            WarehouseSectorSeeder::class,
         ]);
     }
 }

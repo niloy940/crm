@@ -10,7 +10,7 @@ class CreateWarehouseTransfersTable extends Migration
     {
         Schema::create('warehouse_transfers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('quantity', 8, 3);
+            // $table->float('quantity', 8, 3);
             $table->timestamps();
             $table->softDeletes();
         });

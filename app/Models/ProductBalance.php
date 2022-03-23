@@ -36,7 +36,7 @@ class ProductBalance extends Model
         'deleted_at',
     ];
 
-    public function names()
+    public function productLists()
     {
         return $this->belongsToMany(ProductsList::class);
     }

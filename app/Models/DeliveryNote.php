@@ -35,7 +35,7 @@ class DeliveryNote extends Model implements HasMedia
     protected $fillable = [
         'client_id',
         'product_id',
-        'quantity',
+        // 'quantity',
         'int_lot_id',
         'issuer_id',
         'created_at',

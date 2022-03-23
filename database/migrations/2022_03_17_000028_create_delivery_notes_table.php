@@ -10,7 +10,7 @@ class CreateDeliveryNotesTable extends Migration
     {
         Schema::create('delivery_notes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('quantity', 8, 3);
+            // $table->float('quantity', 8, 3);
             $table->timestamps();
             $table->softDeletes();
         });

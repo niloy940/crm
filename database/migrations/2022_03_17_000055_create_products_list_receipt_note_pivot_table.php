@@ -13,6 +13,7 @@ class CreateProductsListReceiptNotePivotTable extends Migration
             $table->foreign('products_list_id', 'products_list_id_fk_6083461')->references('id')->on('products_lists')->onDelete('cascade');
             $table->unsignedBigInteger('receipt_note_id');
             $table->foreign('receipt_note_id', 'receipt_note_id_fk_6083461')->references('id')->on('receipt_notes')->onDelete('cascade');
+            $table->decimal('quantity');
         });
     }
 }

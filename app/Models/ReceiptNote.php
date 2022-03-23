@@ -56,9 +56,7 @@ class ReceiptNote extends Model
 
     protected $fillable = [
         'client_id',
-        'quantity',
         'lot',
-        'int_lot',
         'expiry_date',
         'warehouse_id',
         'sector_id',

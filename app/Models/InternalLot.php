@@ -22,4 +22,9 @@ class InternalLot extends Model
     {
         return $this->belongsToMany(WarehouseTransfer::class)->withPivot('reserved_quantity');
     }
+
+    public function halfProductMakes()
+    {
+        return $this->belongsToMany(HalfProductMake::class)->withPivot('quantity');
+    }
 }

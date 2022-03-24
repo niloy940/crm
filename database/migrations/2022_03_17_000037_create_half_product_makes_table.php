@@ -10,7 +10,7 @@ class CreateHalfProductMakesTable extends Migration
     {
         Schema::create('half_product_makes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('quantity', 7, 2);
+            $table->string('int_lot');
             $table->timestamps();
             $table->softDeletes();
         });

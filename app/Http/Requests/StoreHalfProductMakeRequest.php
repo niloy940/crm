@@ -21,19 +21,17 @@ class StoreHalfProductMakeRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'ingridients.*' => [
-                'integer',
-            ],
-            'ingridients' => [
+            'products' => [
                 'required',
                 'array',
             ],
-            'quantity' => [
-                'numeric',
+            'quantities' => [
                 'required',
+                'array',
             ],
-            'int_lots.*' => [
-                'integer',
+            'int_lot' => [
+                'required',
+                'string'
             ],
             'int_lots' => [
                 'required',

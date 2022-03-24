@@ -8,6 +8,7 @@ use App\Http\Requests\StoreHalfProductMakeRequest;
 use App\Http\Requests\UpdateHalfProductMakeRequest;
 use App\Models\HalfProduct;
 use App\Models\HalfProductMake;
+use App\Models\InternalLot;
 use App\Models\ProductsList;
 use App\Models\ReceiptNote;
 use App\Models\User;
@@ -23,7 +24,7 @@ class HalfProductMakeController extends Controller
         abort_if(Gate::denies('half_product_make_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = HalfProductMake::with(['halfproduct', 'ingridients', 'int_lots', 'made_by'])->select(sprintf('%s.*', (new HalfProductMake())->table));
+            $query = HalfProductMake::with(['halfproduct', 'ingridients', 'internalLots', 'made_by'])->select(sprintf('%s.*', (new HalfProductMake())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -36,12 +37,12 @@ class HalfProductMakeController extends Controller
                 $crudRoutePart = 'half-product-makes';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->addColumn('halfproduct_name', function ($row) {
@@ -61,7 +62,7 @@ class HalfProductMakeController extends Controller
             });
             $table->editColumn('int_lot', function ($row) {
                 $labels = [];
-                foreach ($row->int_lots as $int_lot) {
+                foreach ($row->internalLots as $int_lot) {
                     $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $int_lot->int_lot);
                 }
 
@@ -80,8 +81,9 @@ class HalfProductMakeController extends Controller
         $products_lists = ProductsList::get();
         $receipt_notes  = ReceiptNote::get();
         $users          = User::get();
+        $half_product_makes = HalfProductMake::all();
 
-        return view('admin.halfProductMakes.index', compact('half_products', 'products_lists', 'receipt_notes', 'users'));
+        return view('admin.halfProductMakes.index', compact('half_products', 'products_lists', 'receipt_notes', 'users', 'half_product_makes'));
     }
 
     public function create()
@@ -90,9 +92,16 @@ class HalfProductMakeController extends Controller
 
         $halfproducts = HalfProduct::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $ingridients = ProductsList::pluck('name', 'id');
+        // $ingridients = ProductsList::pluck('name', 'id');
 
-        $int_lots = ReceiptNote::pluck('int_lot', 'id');
+        // $int_lots = ReceiptNote::pluck('int_lot', 'id');
+
+        $int_lots = InternalLot::where('reserved_quantity', '!=', null)->get();
+
+        $ingridients = collect();
+        foreach ($int_lots as  $int_lot) {
+            $ingridients->push($int_lot->product);
+        }
 
         $made_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -102,8 +111,22 @@ class HalfProductMakeController extends Controller
     public function store(StoreHalfProductMakeRequest $request)
     {
         $halfProductMake = HalfProductMake::create($request->all());
-        $halfProductMake->ingridients()->sync($request->input('ingridients', []));
-        $halfProductMake->int_lots()->sync($request->input('int_lots', []));
+        $halfProductMake->ingridients()->sync($request->products);
+
+        for ($i=0; $i < count($request->products); $i++) {
+            $halfProductMake->internalLots()
+                ->attach($request->int_lots[$i], ['quantity' => $request->quantities[$i]]);
+
+            $internalLot = InternalLot::where('id', $request->int_lots[$i])->first();
+            
+            $reserved_quantity = $internalLot->reserved_quantity - $request->quantities[$i];
+            
+            $internalLot->update(
+                [
+                    'reserved_quantity' => $reserved_quantity
+                ]
+            );
+        }
 
         return redirect()->route('admin.half-product-makes.index');
     }
@@ -120,7 +143,7 @@ class HalfProductMakeController extends Controller
 
         $made_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $halfProductMake->load('halfproduct', 'ingridients', 'int_lots', 'made_by');
+        $halfProductMake->load('halfproduct', 'ingridients', 'internalLots', 'made_by');
 
         return view('admin.halfProductMakes.edit', compact('halfProductMake', 'halfproducts', 'ingridients', 'int_lots', 'made_bies'));
     }
@@ -138,7 +161,7 @@ class HalfProductMakeController extends Controller
     {
         abort_if(Gate::denies('half_product_make_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $halfProductMake->load('halfproduct', 'ingridients', 'int_lots', 'made_by');
+        $halfProductMake->load('halfproduct', 'ingridients', 'internalLots', 'made_by');
 
         return view('admin.halfProductMakes.show', compact('halfProductMake'));
     }

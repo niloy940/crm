@@ -118,7 +118,9 @@
                                 {{ $product->balance_max ?? '' }}
                             </td>
                             <td>
-                                {{ $product->balance_reserved ?? '' }}
+                                @foreach ($product->internalLots as $int_lot)
+                                    {{ $int_lot->reserved_quantity }}
+                                @endforeach
                             </td>
                             <td>
                                 @can('product_balance_show')

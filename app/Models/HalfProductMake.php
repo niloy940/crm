@@ -24,7 +24,7 @@ class HalfProductMake extends Model
 
     protected $fillable = [
         'halfproduct_id',
-        'quantity',
+        'int_lot',
         'made_by_id',
         'created_at',
         'updated_at',
@@ -41,9 +41,14 @@ class HalfProductMake extends Model
         return $this->belongsToMany(ProductsList::class);
     }
 
-    public function int_lots()
+    // public function int_lots()
+    // {
+    //     return $this->belongsToMany(ReceiptNote::class);
+    // }
+
+    public function internalLots()
     {
-        return $this->belongsToMany(ReceiptNote::class);
+        return $this->belongsToMany(InternalLot::class)->withPivot('quantity');
     }
 
     public function made_by()

@@ -34,40 +34,6 @@
                 <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.warehouse_to_helper') }}</span>
             </div>
 
-            {{-- <div class="form-group">
-                <label class="required" for="product_id">{{ trans('cruds.warehouseTransfer.fields.product') }}</label>
-                <select class="form-control select2 {{ $errors->has('product') ? 'is-invalid' : '' }}" name="product_id" id="product_id" required>
-                    @foreach($products as $id => $entry)
-                        <option value="{{ $id }}" {{ old('product_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('product'))
-                    <span class="text-danger">{{ $errors->first('product') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.product_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="int_lot_id">{{ trans('cruds.warehouseTransfer.fields.int_lot') }}</label>
-                <select class="form-control select2 {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" name="int_lot_id" id="int_lot_id" required>
-                    @foreach($int_lots as $id => $entry)
-                        <option value="{{ $id }}" {{ old('int_lot_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('int_lot'))
-                    <span class="text-danger">{{ $errors->first('int_lot') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.int_lot_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="quantity">{{ trans('cruds.warehouseTransfer.fields.quantity') }}</label>
-                <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
-                @if($errors->has('quantity'))
-                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.warehouseTransfer.fields.quantity_helper') }}</span>
-            </div> --}}
-
-
             <div class="form-group">
                 <div class="row col-md-12">
                     <table class="table table-bordered">

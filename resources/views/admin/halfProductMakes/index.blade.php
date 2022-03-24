@@ -68,8 +68,10 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($receipt_notes as $key => $item)
-                                <option value="{{ $item->int_lot }}">{{ $item->int_lot }}</option>
+                            @foreach($half_product_makes as $key => $half_product_make)
+                                @foreach ($half_product_make->internalLots as $int_lot)
+                                    <option value="{{ $int_lot->int_lot }}">{{ $int_lot->int_lot }}</option>
+                                @endforeach
                             @endforeach
                         </select>
                     </td>
@@ -142,7 +144,7 @@
 { data: 'halfproduct_name', name: 'halfproduct.name' },
 { data: 'ingridients', name: 'ingridients.name' },
 { data: 'quantity', name: 'quantity' },
-{ data: 'int_lot', name: 'int_lots.int_lot' },
+{ data: 'int_lot', name: 'internalLots.int_lot' },
 { data: 'made_by_name', name: 'made_by.name' },
 { data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

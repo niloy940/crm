@@ -37,12 +37,12 @@ class NoteOfRecepitInterProcessController extends Controller
                 $crudRoutePart = 'note-of-recepit-inter-processes';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('product', function ($row) {

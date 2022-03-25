@@ -11,10 +11,8 @@ class CreateProductionSpentsTable extends Migration
         Schema::create('production_spents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->float('quantity', 8, 3);
             $table->string('shift');
             $table->datetime('date_time');
-            $table->float('quantity_ing', 8, 3);
             $table->timestamps();
             $table->softDeletes();
         });

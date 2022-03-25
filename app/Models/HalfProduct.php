@@ -32,6 +32,16 @@ class HalfProduct extends Model
         'team_id',
     ];
 
+    public function halfProductMakes()
+    {
+        return $this->hasMany(HalfProductMake::class);
+    }
+
+    public function productionSpents()
+    {
+        return $this->belongsToMany(ProductionSpent::class)->withPivot('int_lot', 'quantity');
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

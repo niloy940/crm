@@ -34,11 +34,9 @@ class ProductionSpent extends Model
 
     protected $fillable = [
         'name',
-        'quantity',
         'shift',
         'date_time',
         'ingridients_id',
-        'quantity_ing',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -48,6 +46,11 @@ class ProductionSpent extends Model
     public function products()
     {
         return $this->belongsToMany(ProductsList::class);
+    }
+
+    public function halfProducts()
+    {
+        return $this->belongsToMany(HalfProduct::class)->withPivot('int_lot', 'quantity');
     }
 
     public function getDateTimeAttribute($value)

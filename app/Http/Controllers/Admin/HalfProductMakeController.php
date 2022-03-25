@@ -49,6 +49,10 @@ class HalfProductMakeController extends Controller
                 return $row->halfproduct ? $row->halfproduct->name : '';
             });
 
+            $table->addColumn('halfproduct_quantity', function ($row) {
+                return $row->quantity ? $row->quantity : '';
+            });
+
             $table->editColumn('ingridients', function ($row) {
                 $labels = [];
                 foreach ($row->ingridients as $ingridient) {
@@ -58,7 +62,12 @@ class HalfProductMakeController extends Controller
                 return implode(' ', $labels);
             });
             $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
+                $labels = [];
+                foreach ($row->internalLots as $internal_lot) {
+                    $labels[] = $internal_lot->pivot->quantity;
+                }
+
+                return implode(' , ', $labels);
             });
             $table->editColumn('int_lot', function ($row) {
                 $labels = [];

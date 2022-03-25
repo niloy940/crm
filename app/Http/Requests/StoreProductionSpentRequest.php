@@ -22,15 +22,16 @@ class StoreProductionSpentRequest extends FormRequest
                 'required',
                 'unique:production_spents',
             ],
-            'products.*' => [
-                'integer',
-            ],
             'products' => [
                 'required',
                 'array',
             ],
-            'quantity' => [
-                'numeric',
+            'int_lots' => [
+                'required',
+                'array',
+            ],
+            'quantities' => [
+                'array',
                 'required',
             ],
             'shift' => [
@@ -39,10 +40,6 @@ class StoreProductionSpentRequest extends FormRequest
             'date_time' => [
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-            ],
-            'quantity_ing' => [
-                'numeric',
-                'required',
             ],
         ];
     }

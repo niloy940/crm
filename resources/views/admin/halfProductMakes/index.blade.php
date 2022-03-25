@@ -25,6 +25,9 @@
                         {{ trans('cruds.halfProductMake.fields.halfproduct') }}
                     </th>
                     <th>
+                        {{ trans('cruds.halfProductMake.fields.halfproduct') }} {{ trans('cruds.halfProductMake.fields.quantity') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.halfProductMake.fields.ingridients') }}
                     </th>
                     <th>
@@ -53,6 +56,9 @@
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <select class="search">
@@ -142,6 +148,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'halfproduct_name', name: 'halfproduct.name' },
+{ data: 'halfproduct_quantity', name: 'halfproduct.quantity' },
 { data: 'ingridients', name: 'ingridients.name' },
 { data: 'quantity', name: 'quantity' },
 { data: 'int_lot', name: 'internalLots.int_lot' },

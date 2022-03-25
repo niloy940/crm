@@ -75,11 +75,20 @@
             </div>
 
             <div class="form-group">
-                <label class="required" for="quantity">{{ trans('cruds.receiptNote.fields.int_lot_helper') }}</label>
+                <label class="required" for="int_lot">{{ trans('cruds.receiptNote.fields.int_lot_helper') }}</label>
                 <input class="form-control {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" type="text" name="int_lot" id="int_lot" value="{{ old('int_lot', '') }}" required>
                 @if($errors->has('int_lot'))
                     <span class="text-danger">{{ $errors->first('int_lot') }}</span>
                 @endif
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="quantity">{{ trans('cruds.receiptNote.fields.quantity') }}</label>
+                <input class="form-control {{ $errors->has('int_lot') ? 'is-invalid' : '' }}" type="text" name="quantity" id="int_lot" value="{{ old('int_lot', '') }}" required>
+                @if($errors->has('int_lot'))
+                    <span class="text-danger">{{ $errors->first('int_lot') }}</span>
+                @endif
+                <span>Half product's quantity</span>
             </div>
 
             <div class="form-group">

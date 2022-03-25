@@ -37,6 +37,10 @@ class StoreHalfProductMakeRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'quantity' => [
+                'numeric',
+                'required',
+            ],
             'made_by_id' => [
                 'required',
                 'integer',

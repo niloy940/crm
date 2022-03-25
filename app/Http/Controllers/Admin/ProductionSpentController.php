@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProductionSpentRequest;
 use App\Http\Requests\StoreProductionSpentRequest;
 use App\Http\Requests\UpdateProductionSpentRequest;
+use App\Models\HalfProduct;
+use App\Models\HalfProductMake;
 use App\Models\ProductionSpent;
 use App\Models\ProductsList;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -33,12 +36,12 @@ class ProductionSpentController extends Controller
                 $crudRoutePart = 'production-spents';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('name', function ($row) {
@@ -79,17 +82,27 @@ class ProductionSpentController extends Controller
     {
         abort_if(Gate::denies('production_spent_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $products = ProductsList::pluck('name', 'id');
+        $half_products = HalfProduct::all();
 
         $ingridients = ProductsList::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.productionSpents.create', compact('ingridients', 'products'));
+        $half_product_makes = HalfProductMake::all();
+
+        return view('admin.productionSpents.create', compact('ingridients', 'half_products', 'half_product_makes'));
     }
 
     public function store(StoreProductionSpentRequest $request)
     {
         $productionSpent = ProductionSpent::create($request->all());
-        $productionSpent->products()->sync($request->input('products', []));
+
+        for ($i=0; $i < count($request->products); $i++) {
+            $productionSpent->halfProducts()->attach($request->products[$i], ['int_lot' => $request->int_lots[$i], 'quantity' => $request->quantities[$i]]);
+
+            $half_product_make = HalfProductMake::where('int_lot', $request->int_lots[$i])->first();
+
+            $quantity = $half_product_make->quantity - $request->quantities[$i];
+            $half_product_make->update(['quantity' => $quantity]);
+        }
 
         return redirect()->route('admin.production-spents.index');
     }

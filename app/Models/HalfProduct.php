@@ -42,6 +42,12 @@ class HalfProduct extends Model
         return $this->belongsToMany(ProductionSpent::class)->withPivot('int_lot', 'quantity');
     }
 
+    public function finishedProducts()
+    {
+        return $this->belongsToMany(CreateFinishedProduct::class, 'create_finished_product_half_product', 'finished_product_id', 'half_product_id')
+            ->withPivot('int_lot', 'quantity');
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

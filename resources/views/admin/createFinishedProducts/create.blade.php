@@ -22,7 +22,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.shift_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label class="required" for="products">{{ trans('cruds.createFinishedProduct.fields.product') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -45,19 +45,75 @@
                     <span class="text-danger">{{ $errors->first('quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.quantity_helper') }}</span>
+            </div> --}}
+
+            <div class="form-group">
+                <div class="row col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>{{ trans('cruds.productionSpent.fields.product') }}</th>
+                                <th>{{ trans('cruds.receiptNote.fields.int_lot_helper') }}</th>
+                                <th>{{ trans('cruds.receiptNote.fields.quantity') }}</th>
+                                <th><a href="#" id="addRow" class="btn btn-info">+</a></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select
+                                        class="form-control form-select {{ $errors->has('products') ? 'is-invalid' : '' }}"
+                                        name="products[]" id="products" required>
+                                        <option>{{trans('global.pleaseSelect')}}</option>
+                                        @foreach ($half_products as $product)
+                                            <option value="{{ $product->id }}">
+                                                {{ $product->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>         
+                                <td>
+                                    <select
+                                        class="form-control form-select {{ $errors->has('int_lots') ? 'is-invalid' : '' }}"
+                                        name="int_lots[]" id="int_lots" required>
+                                        <option>{{trans('global.pleaseSelect')}}</option>
+                                        @foreach ($processing_spents as $processing_spent)
+                                            @foreach ($processing_spent->halfProducts as $half_product)     
+                                                <option value="{{ $half_product->pivot->int_lot }}">
+                                                    {{ $half_product->name }} - {{ $half_product->pivot->int_lot }} ({{$half_product->pivot->quantity}})
+                                                </option> 
+                                            @endforeach
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="form-control {{ $errors->has('quantities') ? 'is-invalid' : '' }}" type="number"
+                                        name="quantities[]" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
+                                    @if ($errors->has('quantities'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('quantities') }}
+                                        </div>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+
             <div class="form-group">
                 <label class="required" for="user_id">{{ trans('cruds.createFinishedProduct.fields.user') }}</label>
                 <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
-                    @foreach($users as $id => $entry)
-                        <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
+                    <option value="{{ auth()->user()->id }}" {{ old('user_id') == auth()->user()->id ? 'selected' : '' }}>{{ auth()->user()->name }}</option>
                 </select>
                 @if($errors->has('user'))
                     <span class="text-danger">{{ $errors->first('user') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.user_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label class="required" for="expiry_date">{{ trans('cruds.createFinishedProduct.fields.expiry_date') }}</label>
                 <input class="form-control date {{ $errors->has('expiry_date') ? 'is-invalid' : '' }}" type="text" name="expiry_date" id="expiry_date" value="{{ old('expiry_date') }}" required>
@@ -69,8 +125,9 @@
             <div class="form-group">
                 <label class="required" for="processing_spent_id">{{ trans('cruds.createFinishedProduct.fields.processing_spent') }}</label>
                 <select class="form-control select2 {{ $errors->has('processing_spent') ? 'is-invalid' : '' }}" name="processing_spent_id" id="processing_spent_id" required>
-                    @foreach($processing_spents as $id => $entry)
-                        <option value="{{ $id }}" {{ old('processing_spent_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    <option>{{trans('global.pleaseSelect')}}</option>
+                    @foreach($processing_spents as $processing_spent)
+                        <option value="{{ $processing_spent->id }}" {{ old('processing_spent_id') == $processing_spent->id ? 'selected' : '' }}>{{ $processing_spent->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('processing_spent'))
@@ -86,7 +143,49 @@
         </form>
     </div>
 </div>
+@endsection
 
+@section('scripts')
+    <script type="text/javascript">
 
+        $('#addRow').on('click', function() {
+            addRow();
+        })
 
+        function addRow() {
+            
+            var tr = '<tr>' +
+                        '<td>' + 
+                            '<select class="form-control form-select {{ $errors->has("products") ? "is-invalid" : "" }}" name="products[]" id="products" required>' +
+                                "@foreach ($half_products as $product)" +
+                                    '<option value="{{ $product->id }}">' +
+                                        "{{ $product->name }}" +
+                                    '</option>' +
+                                "@endforeach" +
+                            '</select>' +
+                        '</td>' +
+                        '<td>' + 
+                            '<select class="form-control form-select {{ $errors->has("int_lots") ? "is-invalid" : "" }}" name="int_lots[]" id="int_lots" required>' +
+                                '<option value="">Select One</option>' +
+                                    '@foreach ($processing_spents as $processing_spent)' +
+                                        '@foreach ($processing_spent->halfProducts as $half_product)' +     
+                                            '<option value="{{ $half_product->pivot->int_lot }}">' + 
+                                                '{{ $half_product->name }} - {{ $half_product->pivot->int_lot }} ({{$half_product->pivot->quantity}})' +
+                                            '</option>' + 
+                                        '@endforeach' +
+                                    '@endforeach' +
+                            '</select>' +
+                        '</td>' +
+                        '<td><input class="form-control" type="text" name="quantities[]" id="quantities" required></td>' +
+                        '<td><a href="#" id="remove" class="btn btn-danger">-</a></td>' +
+                    '</tr>';
+            
+            $('tbody').append(tr)
+        }
+
+        $('tbody').on('click', '#remove', function() {
+            $(this).parent().parent().remove();
+        })
+
+    </script>
 @endsection

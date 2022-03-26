@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyCreateFinishedProductRequest;
 use App\Http\Requests\StoreCreateFinishedProductRequest;
 use App\Http\Requests\UpdateCreateFinishedProductRequest;
 use App\Models\CreateFinishedProduct;
+use App\Models\HalfProduct;
 use App\Models\ProductionSpent;
 use App\Models\ProductsList;
 use App\Models\User;
@@ -35,12 +36,12 @@ class CreateFinishedProductController extends Controller
                 $crudRoutePart = 'create-finished-products';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('shift', function ($row) {
@@ -77,19 +78,32 @@ class CreateFinishedProductController extends Controller
     {
         abort_if(Gate::denies('create_finished_product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $products = ProductsList::pluck('name', 'id');
+        $half_products = HalfProduct::all();
+
+        $processing_spents = ProductionSpent::all();
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $processing_spents = ProductionSpent::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.createFinishedProducts.create', compact('processing_spents', 'products', 'users'));
+        return view('admin.createFinishedProducts.create', compact('processing_spents', 'half_products', 'users'));
     }
 
     public function store(StoreCreateFinishedProductRequest $request)
     {
         $createFinishedProduct = CreateFinishedProduct::create($request->all());
-        $createFinishedProduct->products()->sync($request->input('products', []));
+
+        for ($i=0; $i < count($request->products); $i++) {
+            $createFinishedProduct->halfProducts()->attach($request->products[$i], ['int_lot' => $request->int_lots[$i], 'quantity' => $request->quantities[$i]]);
+
+            $processing_half_products = $createFinishedProduct->processing_spent->halfProducts()->get();
+
+            foreach ($processing_half_products as $half_product) {
+                $quantity = $half_product->pivot->quantity - $request->quantities[$i];
+
+                $half_product->pivot->quantity = $quantity;
+
+                $half_product->pivot->save();
+            }
+        }
 
         return redirect()->route('admin.create-finished-products.index');
     }

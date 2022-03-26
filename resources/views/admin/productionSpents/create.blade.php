@@ -92,26 +92,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.date_time_helper') }}</span>
             </div>
-            {{-- <div class="form-group">
-                <label for="ingridients_id">{{ trans('cruds.productionSpent.fields.ingridients') }}</label>
-                <select class="form-control select2 {{ $errors->has('ingridients') ? 'is-invalid' : '' }}" name="ingridients_id" id="ingridients_id">
-                    @foreach($ingridients as $id => $entry)
-                        <option value="{{ $id }}" {{ old('ingridients_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('ingridients'))
-                    <span class="text-danger">{{ $errors->first('ingridients') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.productionSpent.fields.ingridients_helper') }}</span>
-            </div> --}}
-            {{-- <div class="form-group">
-                <label class="required" for="quantity_ing">{{ trans('cruds.productionSpent.fields.quantity_ing') }}</label>
-                <input class="form-control {{ $errors->has('quantity_ing') ? 'is-invalid' : '' }}" type="number" name="quantity_ing" id="quantity_ing" value="{{ old('quantity_ing', '') }}" step="0.001" required>
-                @if($errors->has('quantity_ing'))
-                    <span class="text-danger">{{ $errors->first('quantity_ing') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.productionSpent.fields.quantity_ing_helper') }}</span>
-            </div> --}}
+            
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

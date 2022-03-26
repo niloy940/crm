@@ -27,8 +27,12 @@ class StoreCreateFinishedProductRequest extends FormRequest
                 'required',
                 'array',
             ],
-            'quantity' => [
-                'numeric',
+            'int_lots' => [
+                'required',
+                'array',
+            ],
+            'quantities' => [
+                'array',
                 'required',
             ],
             'user_id' => [

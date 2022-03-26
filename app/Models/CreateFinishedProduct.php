@@ -34,7 +34,6 @@ class CreateFinishedProduct extends Model
 
     protected $fillable = [
         'shift',
-        'quantity',
         'user_id',
         'created_at',
         'expiry_date',
@@ -47,6 +46,12 @@ class CreateFinishedProduct extends Model
     public function products()
     {
         return $this->belongsToMany(ProductsList::class);
+    }
+
+    public function halfProducts()
+    {
+        return $this->belongsToMany(HalfProduct::class, 'create_finished_product_half_product', 'half_product_id', 'finished_product_id')
+            ->withPivot('int_lot', 'quantity');
     }
 
     public function user()

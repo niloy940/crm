@@ -31,6 +31,9 @@
                         {{ trans('cruds.productionSpent.fields.quantity') }}
                     </th>
                     <th>
+                        {{ trans('cruds.receiptNote.fields.int_lot_helper') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.productionSpent.fields.shift') }}
                     </th>
                     <th>
@@ -39,9 +42,7 @@
                     <th>
                         {{ trans('cruds.productionSpent.fields.ingridients') }}
                     </th>
-                    <th>
-                        {{ trans('cruds.productionSpent.fields.quantity_ing') }}
-                    </th>
+                    
                     <th>
                         &nbsp;
                     </th>
@@ -101,10 +102,10 @@
 { data: 'name', name: 'name' },
 { data: 'product', name: 'products.name' },
 { data: 'quantity', name: 'quantity' },
+{ data: 'int_lot', name: 'int_lot' },
 { data: 'shift', name: 'shift' },
 { data: 'date_time', name: 'date_time' },
 { data: 'ingridients_name', name: 'ingridients.name' },
-{ data: 'quantity_ing', name: 'quantity_ing' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

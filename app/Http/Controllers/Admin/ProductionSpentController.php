@@ -49,14 +49,19 @@ class ProductionSpentController extends Controller
             });
             $table->editColumn('product', function ($row) {
                 $labels = [];
-                foreach ($row->products as $product) {
+                foreach ($row->halfProducts as $product) {
                     $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $product->name);
                 }
 
                 return implode(' ', $labels);
             });
             $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
+                $labels = [];
+                foreach ($row->halfProducts as $half_product) {
+                    $labels[] = $half_product->pivot->quantity;
+                }
+
+                return implode(' , ', $labels);
             });
             $table->editColumn('shift', function ($row) {
                 return $row->shift ? ProductionSpent::SHIFT_SELECT[$row->shift] : '';
@@ -66,8 +71,13 @@ class ProductionSpentController extends Controller
                 return $row->ingridients ? $row->ingridients->name : '';
             });
 
-            $table->editColumn('quantity_ing', function ($row) {
-                return $row->quantity_ing ? $row->quantity_ing : '';
+            $table->editColumn('int_lot', function ($row) {
+                $labels = [];
+                foreach ($row->halfProducts as $half_product) {
+                    $labels[] = $half_product->pivot->int_lot;
+                }
+
+                return implode(' , ', $labels);
             });
 
             $table->rawColumns(['actions', 'placeholder', 'product', 'ingridients']);

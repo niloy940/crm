@@ -21,7 +21,9 @@ class ProductBalanceProcessingController extends Controller
 
         $productBalanceProcessings = ProductBalanceProcessing::with(['halfproduct', 'balance_min', 'balance_optimal', 'team'])->get();
 
-        return view('admin.productBalanceProcessings.index', compact('productBalanceProcessings'));
+        $half_product_makes = HalfProductMake::all();
+
+        return view('admin.productBalanceProcessings.index', compact('productBalanceProcessings', 'half_product_makes'));
     }
 
     public function create()

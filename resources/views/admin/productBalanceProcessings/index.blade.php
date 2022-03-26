@@ -46,7 +46,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($productBalanceProcessings as $key => $productBalanceProcessing)
+                    {{-- @foreach($productBalanceProcessings as $key => $productBalanceProcessing)
                         <tr data-entry-id="{{ $productBalanceProcessing->id }}">
                             <td>
 
@@ -84,6 +84,55 @@
 
                                 @can('product_balance_processing_delete')
                                     <form action="{{ route('admin.product-balance-processings.destroy', $productBalanceProcessing->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach --}}
+
+                    @foreach($half_product_makes as $key => $half_product_make)
+                        <tr data-entry-id="{{ $half_product_make->halfProduct->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $half_product_make->halfproduct->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $half_product_make->quantity ?? '' }}
+                            </td>
+                            <td>
+                                {{ $half_product_make->balance_min->balance_min ?? '' }}
+                            </td>
+                            <td>
+                                {{ $half_product_make->balance_optimal->balance_optimal ?? '' }}
+                            </td>
+                            <td>
+                                {{ $half_product_make->balance_max ?? '' }}
+                            </td>
+                            <td>
+                                {{ $half_product_make->balance_reserved ?? '' }}
+                            </td>
+                            <td>
+                                @can('product_balance_processing_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.product-balance-processings.show', $half_product_make->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('product_balance_processing_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.product-balance-processings.edit', $half_product_make->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('product_balance_processing_delete')
+                                    <form action="{{ route('admin.product-balance-processings.destroy', $half_product_make->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">

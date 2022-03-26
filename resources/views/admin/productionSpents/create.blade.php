@@ -17,30 +17,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.productionSpent.fields.name_helper') }}</span>
             </div>
-            {{-- <div class="form-group">
-                <label class="required" for="products">{{ trans('cruds.productionSpent.fields.product') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('products') ? 'is-invalid' : '' }}" name="products[]" id="products" multiple required>
-                    @foreach($products as $id => $product)
-                        <option value="{{ $id }}" {{ in_array($id, old('products', [])) ? 'selected' : '' }}>{{ $product }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('products'))
-                    <span class="text-danger">{{ $errors->first('products') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.productionSpent.fields.product_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="quantity">{{ trans('cruds.productionSpent.fields.quantity') }}</label>
-                <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.001" required>
-                @if($errors->has('quantity'))
-                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.productionSpent.fields.quantity_helper') }}</span>
-            </div> --}}
+
 
             <div class="form-group">
                 <div class="row col-md-12">

@@ -50,9 +50,11 @@
                                         name="int_lots[]" id="int_lots" required>
                                         <option value="">Select One</option>
                                         @foreach ($half_product_makes as $half_product_make)
-                                           <option value="{{ $half_product_make->int_lot }}">
-                                                {{ $half_product_make->halfProduct->name }} - {{ $half_product_make->int_lot }} ({{$half_product_make->quantity}})
-                                            </option> 
+                                            @if ($half_product_make->quantity)
+                                                <option value="{{ $half_product_make->int_lot }}">
+                                                    {{ $half_product_make->halfProduct->name }} - {{ $half_product_make->int_lot }} ({{$half_product_make->quantity}})
+                                                </option> 
+                                            @endif
                                         @endforeach
                                     </select>
                                 </td>

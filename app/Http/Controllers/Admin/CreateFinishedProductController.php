@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCreateFinishedProductRequest;
 use App\Http\Requests\UpdateCreateFinishedProductRequest;
 use App\Models\CreateFinishedProduct;
 use App\Models\HalfProduct;
+use App\Models\HalfProductMake;
 use App\Models\ProductionSpent;
 use App\Models\ProductsList;
 use App\Models\User;
@@ -49,14 +50,19 @@ class CreateFinishedProductController extends Controller
             });
             $table->editColumn('product', function ($row) {
                 $labels = [];
-                foreach ($row->products as $product) {
+                foreach ($row->halfProducts as $product) {
                     $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $product->name);
                 }
 
                 return implode(' ', $labels);
             });
             $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
+                $labels = [];
+                foreach ($row->halfProducts as $half_product) {
+                    $labels[] = $half_product->pivot->quantity;
+                }
+
+                return implode(' , ', $labels);
             });
             $table->addColumn('user_name', function ($row) {
                 return $row->user ? $row->user->name : '';
@@ -82,9 +88,11 @@ class CreateFinishedProductController extends Controller
 
         $processing_spents = ProductionSpent::all();
 
+        $half_product_makes = HalfProductMake::all();
+
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.createFinishedProducts.create', compact('processing_spents', 'half_products', 'users'));
+        return view('admin.createFinishedProducts.create', compact('processing_spents', 'half_products', 'half_product_makes', 'users'));
     }
 
     public function store(StoreCreateFinishedProductRequest $request)
@@ -103,6 +111,16 @@ class CreateFinishedProductController extends Controller
 
                 $half_product->pivot->save();
             }
+
+            $half_product_make = HalfProductMake::where('int_lot', $request->int_lots[$i])->first();
+
+            $quantity = $half_product_make->processing_quantity - $request->quantities[$i];
+            $half_product_make->update(
+                [
+                    'processing_quantity' => $quantity,
+                    'finished_quantity' => $request->quantities[$i]
+                ]
+            );
         }
 
         return redirect()->route('admin.create-finished-products.index');

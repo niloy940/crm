@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDeliveryNoteRequest;
 use App\Http\Requests\StoreDeliveryNoteRequest;
 use App\Http\Requests\UpdateDeliveryNoteRequest;
+use App\Models\CreateFinishedProduct;
 use App\Models\CrmCustomer;
 use App\Models\DeliveryNote;
 use App\Models\ProductsList;
@@ -43,12 +44,12 @@ class DeliveryNoteController extends Controller
                 $crudRoutePart = 'delivery-notes';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('id', function ($row) {
@@ -117,18 +118,28 @@ class DeliveryNoteController extends Controller
 
         $clients = CrmCustomer::pluck('company_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $products = ProductsList::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $finished_products = CreateFinishedProduct::all();
 
-        $int_lots = ReceiptNote::pluck('int_lot', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $issuers = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.deliveryNotes.create', compact('clients', 'int_lots', 'issuers', 'products'));
+        return view('admin.deliveryNotes.create', compact('clients', 'finished_products'));
     }
 
     public function store(StoreDeliveryNoteRequest $request)
     {
         $deliveryNote = DeliveryNote::create($request->all());
+
+        for ($i=0; $i < count($request->products); $i++) {
+            $deliveryNote->halfProducts()->attach($request->products[$i], ['int_lot' => $request->int_lots[$i], 'quantity' => $request->quantities[$i]]);
+
+            foreach ($deliveryNote->halfProducts as $half_product) {
+                foreach ($half_product->finishedProducts as  $finished_product) {
+                    $quantity = $finished_product->pivot->quantity - $request->quantities[$i];
+    
+                    $finished_product->pivot->quantity = $quantity;
+    
+                    $finished_product->pivot->save();
+                }
+            }
+        }
 
         foreach ($request->input('document', []) as $file) {
             $deliveryNote->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document');

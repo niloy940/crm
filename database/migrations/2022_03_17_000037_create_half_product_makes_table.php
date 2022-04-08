@@ -11,6 +11,8 @@ class CreateHalfProductMakesTable extends Migration
         Schema::create('half_product_makes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->decimal('quantity');
+            $table->decimal('processing_quantity')->nullable();
+            $table->decimal('finished_quantity')->nullable();
             $table->string('int_lot');
             $table->timestamps();
             $table->softDeletes();

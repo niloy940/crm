@@ -22,30 +22,6 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.shift_helper') }}</span>
             </div>
-            {{-- <div class="form-group">
-                <label class="required" for="products">{{ trans('cruds.createFinishedProduct.fields.product') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('products') ? 'is-invalid' : '' }}" name="products[]" id="products" multiple required>
-                    @foreach($products as $id => $product)
-                        <option value="{{ $id }}" {{ in_array($id, old('products', [])) ? 'selected' : '' }}>{{ $product }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('products'))
-                    <span class="text-danger">{{ $errors->first('products') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.product_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="quantity">{{ trans('cruds.createFinishedProduct.fields.quantity') }}</label>
-                <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="number" name="quantity" id="quantity" value="{{ old('quantity', '') }}" step="0.01" required>
-                @if($errors->has('quantity'))
-                    <span class="text-danger">{{ $errors->first('quantity') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.createFinishedProduct.fields.quantity_helper') }}</span>
-            </div> --}}
 
             <div class="form-group">
                 <div class="row col-md-12">
@@ -79,10 +55,12 @@
                                         name="int_lots[]" id="int_lots" required>
                                         <option>{{trans('global.pleaseSelect')}}</option>
                                         @foreach ($processing_spents as $processing_spent)
-                                            @foreach ($processing_spent->halfProducts as $half_product)     
-                                                <option value="{{ $half_product->pivot->int_lot }}">
-                                                    {{ $half_product->name }} - {{ $half_product->pivot->int_lot }} ({{$half_product->pivot->quantity}})
-                                                </option> 
+                                            @foreach ($processing_spent->halfProducts as $half_product)
+                                                @if ($half_product->pivot->quantity > 0)   
+                                                    <option value="{{ $half_product->pivot->int_lot }}">
+                                                        {{ $half_product->name }} - {{ $half_product->pivot->int_lot }} ({{$half_product->pivot->quantity}})
+                                                    </option> 
+                                                @endif  
                                             @endforeach
                                         @endforeach
                                     </select>
@@ -127,7 +105,9 @@
                 <select class="form-control select2 {{ $errors->has('processing_spent') ? 'is-invalid' : '' }}" name="processing_spent_id" id="processing_spent_id" required>
                     <option>{{trans('global.pleaseSelect')}}</option>
                     @foreach($processing_spents as $processing_spent)
-                        <option value="{{ $processing_spent->id }}" {{ old('processing_spent_id') == $processing_spent->id ? 'selected' : '' }}>{{ $processing_spent->name }}</option>
+                        @foreach ($processing_spent->halfProducts as $half_product)    
+                            <option value="{{ $processing_spent->id }}" {{ old('processing_spent_id') == $processing_spent->id ? 'selected' : '' }}>{{ $processing_spent->name }} ({{ $half_product->name }} - {{ $half_product->pivot->quantity }})</option>
+                        @endforeach
                     @endforeach
                 </select>
                 @if($errors->has('processing_spent'))
@@ -168,10 +148,12 @@
                             '<select class="form-control form-select {{ $errors->has("int_lots") ? "is-invalid" : "" }}" name="int_lots[]" id="int_lots" required>' +
                                 '<option value="">Select One</option>' +
                                     '@foreach ($processing_spents as $processing_spent)' +
-                                        '@foreach ($processing_spent->halfProducts as $half_product)' +     
-                                            '<option value="{{ $half_product->pivot->int_lot }}">' + 
-                                                '{{ $half_product->name }} - {{ $half_product->pivot->int_lot }} ({{$half_product->pivot->quantity}})' +
-                                            '</option>' + 
+                                        '@foreach ($processing_spent->halfProducts as $half_product)' +
+                                            '@if ($half_product->pivot->quantity > 0)' +     
+                                                '<option value="{{ $half_product->pivot->int_lot }}">' + 
+                                                    '{{ $half_product->name }} - {{ $half_product->pivot->int_lot }} ({{$half_product->pivot->quantity}})' +
+                                                '</option>' + 
+                                            '@endif' +
                                         '@endforeach' +
                                     '@endforeach' +
                             '</select>' +

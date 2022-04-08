@@ -50,7 +50,7 @@ class CreateFinishedProduct extends Model
 
     public function halfProducts()
     {
-        return $this->belongsToMany(HalfProduct::class, 'create_finished_product_half_product', 'half_product_id', 'finished_product_id')
+        return $this->belongsToMany(HalfProduct::class, 'create_finished_product_half_product', 'finished_product_id', 'half_product_id')
             ->withPivot('int_lot', 'quantity');
     }
 

@@ -60,6 +60,11 @@ class DeliveryNote extends Model implements HasMedia
         return $this->belongsTo(ProductsList::class, 'product_id');
     }
 
+    public function halfProducts()
+    {
+        return $this->belongsToMany(HalfProduct::class)->withPivot('int_lot', 'quantity');
+    }
+
     public function int_lot()
     {
         return $this->belongsTo(ReceiptNote::class, 'int_lot_id');

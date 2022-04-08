@@ -25,6 +25,8 @@ class HalfProductMake extends Model
     protected $fillable = [
         'halfproduct_id',
         'quantity',
+        'processing_quantity',
+        'finished_quantity',
         'int_lot',
         'made_by_id',
         'created_at',

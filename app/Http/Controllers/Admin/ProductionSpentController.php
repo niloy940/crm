@@ -111,7 +111,12 @@ class ProductionSpentController extends Controller
             $half_product_make = HalfProductMake::where('int_lot', $request->int_lots[$i])->first();
 
             $quantity = $half_product_make->quantity - $request->quantities[$i];
-            $half_product_make->update(['quantity' => $quantity]);
+            $half_product_make->update(
+                [
+                    'quantity' => $quantity,
+                    'processing_quantity' => $request->quantities[$i]
+                ]
+            );
         }
 
         return redirect()->route('admin.production-spents.index');
